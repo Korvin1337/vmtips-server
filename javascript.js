@@ -1,7 +1,7 @@
 const { useState, useEffect, useMemo, useRef, useCallback } = React;
 
 const BIN_ID = '6a29db78f5f4af5e29db230f';
-const API_KEY = '$2a$10$KushHfovtTt7Q6nxCfzaneaPbAS/KPIwpmsfT72FnX06xuif3n6/y';
+const API_KEY = '$2a$10$xdIj7X87M6xfcsj/Sn95c.KHT8STn5a1kT4eg2htIjFrRyImmb34G';
 
 const fixturesData = [
     { id: 1, date: "Torsdag 11 juni", time: "21:00", home: "Mexiko", away: "Sydafrika", tv: "TV4" },
