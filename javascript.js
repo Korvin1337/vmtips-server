@@ -1,6 +1,6 @@
 const { useState, useEffect, useMemo, useRef, useCallback } = React;
 
-const BIN_ID = '6a29db78f5f4af5e29db230f';
+const BIN_ID = '67cd0095ad19ca34f817db4b';
 const API_KEY = '$2a$10$xdIj7X87M6xfcsj/Sn95c.KHT8STn5a1kT4eg2htIjFrRyImmb34G';
 
 const fixturesData = [
@@ -124,24 +124,9 @@ const App = () => {
     const ADMIN_PASSWORD = "VMTIPS2026";
 
     useEffect(() => {
-        if (!BIN_ID || BIN_ID === 'BYT_UT_MOT_DITT_BIN_ID_HÄR') {
-            const saved = localStorage.getItem("vmtips_v3");
-            if (saved) {
-                try {
-                    const parsed = JSON.parse(saved);
-                    setState(parsed);
-                    if (Object.keys(parsed.players).length > 0) {
-                        setBrowsedPlayer(Object.keys(parsed.players)[0]);
-                    }
-                } catch (e) {}
-            }
-            setLoadedFile(true);
-            return;
-        }
-
         fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
             headers: {
-                'X-Master-Key': API_KEY
+                'X-Access-Key': API_KEY
             }
         })
         .then(res => {
@@ -176,12 +161,12 @@ const App = () => {
         if (loadedFile) {
             localStorage.setItem("vmtips_v3", JSON.stringify(state));
 
-            if (BIN_ID && BIN_ID !== 'BYT_UT_MOT_DITT_BIN_ID_HÄR' && isAuthenticated) {
+            if (isAuthenticated) {
                 fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-Master-Key': API_KEY
+                        'X-Access-Key': API_KEY
                     },
                     body: JSON.stringify(state),
                 }).catch(err => console.error("Failed to save to server:", err));
@@ -487,13 +472,13 @@ const App = () => {
             <div className="flex flex-col items-center justify-center min-h-screen p-4 relative gap-12">
                 <div className="bg-slate-800 p-10 rounded-xl shadow-2xl border border-slate-700 w-full max-w-lg text-center">
                     <h1 className="text-5xl font-black text-emerald-400 mb-4 tracking-wider">VM Tips 2026</h1>
-                    <h2 className="text-xl text-slate-200 mb-8 font-medium">Släktmästerskapet</h2>
+                    <h2 className="text-xl text-slate-200 mb-8 font-medium">Mästerskapet</h2>
                     
                     <button 
                         onClick={handleGuestLogin}
                         className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 text-lg rounded-xl transition-colors shadow-lg shadow-emerald-900/20"
                     >
-                        Fortsätt som Gäst (Åskådare)
+                        Fortsätt
                     </button>
                 </div>
 
