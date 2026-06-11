@@ -522,7 +522,7 @@ const App = () => {
                     <tbody>
                         {fixturesData.map((f, idx) => {
                             const act = state.actual[f.id] || {};
-                            const actStr = (act.h !== undefined && act.h !== "") ? `${act.h} - ${act.a}` : "-";
+                            const actStr = (act.h !== undefined && act.h !== "" && act.a !== undefined && act.a !== "") ? `${act.h} - ${act.a}` : "-";
                             const isResultLocked = state.lockedDays?.[f.date] || false;
 
                             return (
@@ -534,7 +534,7 @@ const App = () => {
                                     <td className="p-2 text-center font-bold text-white">{actStr}</td>
                                     {playerKeys.map(p => {
                                         const tip = state.players[p]?.tips[f.id] || {};
-                                        const tipStr = (tip.h !== undefined && tip.h !== "") ? `${tip.h}-${tip.a}` : "";
+                                        const tipStr = (tip.h !== undefined && tip.h !== "" && tip.a !== undefined && tip.a !== "") ? `${tip.h}-${tip.a}` : "";
                                         const pts = calculateMatchScore(act.h, act.a, tip.h, tip.a, isResultLocked);
                                         
                                         return (
@@ -584,6 +584,8 @@ const App = () => {
                                         const act = state.actual[f.id] || {};
                                         const isResultLocked = state.lockedDays?.[f.date] || false;
                                         const pts = calculateMatchScore(act.h, act.a, tip.h, tip.a, isResultLocked);
+                                        const tipStrH = (tip.h !== undefined && tip.h !== "") ? tip.h : "0";
+                                        const tipStrA = (tip.a !== undefined && tip.a !== "") ? tip.a : "0";
                                         
                                         return (
                                             <div key={f.id} className="bg-slate-800 border border-slate-700 rounded-lg p-3 flex flex-row items-center gap-4 shadow-sm">
@@ -596,9 +598,9 @@ const App = () => {
                                                     <div className="text-right flex-1 font-medium tracking-wide text-slate-200">{f.home}</div>
                                                     
                                                     <div className="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded border border-slate-700">
-                                                        <div className="w-6 text-center text-lg font-bold text-white">{tip.h || "0"}</div>
+                                                        <div className="w-6 text-center text-lg font-bold text-white">{tipStrH}</div>
                                                         <span className="text-slate-500 font-extrabold text-base">&ndash;</span>
-                                                        <div className="w-6 text-center text-lg font-bold text-white">{tip.a || "0"}</div>
+                                                        <div className="w-6 text-center text-lg font-bold text-white">{tipStrA}</div>
                                                     </div>
 
                                                     <div className="text-left flex-1 font-medium tracking-wide text-slate-200">{f.away}</div>
@@ -780,7 +782,7 @@ const App = () => {
                             <tbody>
                                 {fixturesData.map((f, idx) => {
                                     const act = state.actual[f.id] || {};
-                                    const actStr = (act.h !== undefined && act.h !== "") ? `${act.h} - ${act.a}` : "-";
+                                    const actStr = (act.h !== undefined && act.h !== "" && act.a !== undefined && act.a !== "") ? `${act.h} - ${act.a}` : "-";
                                     const isResultLocked = state.lockedDays?.[f.date] || false;
 
                                     return (
@@ -792,7 +794,7 @@ const App = () => {
                                             <td className="p-3 text-center font-bold text-white bg-slate-900/30">{actStr}</td>
                                             {playerKeys.map(p => {
                                                 const tip = state.players[p]?.tips[f.id] || {};
-                                                const tipStr = (tip.h !== undefined && tip.h !== "") ? `${tip.h}-${tip.a}` : "";
+                                                const tipStr = (tip.h !== undefined && tip.h !== "" && tip.a !== undefined && tip.a !== "") ? `${tip.h}-${tip.a}` : "";
                                                 const pts = calculateMatchScore(act.h, act.a, tip.h, tip.a, isResultLocked);
                                                 
                                                 return (
