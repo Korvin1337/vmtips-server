@@ -437,6 +437,9 @@ const App = () => {
         requireAdmin(() => {
             const key = browsedPlayer.trim();
             if (!key) return;
+            
+            const isCurrentlyLocked = state.players[key]?.locked;
+            
             setModalConfig({
                 title: "Lås Spelare",
                 message: `Ändra låsstatus för ${key}?`,
@@ -445,9 +448,35 @@ const App = () => {
                     setState(s => {
                         const players = { ...s.players };
                         if (!players[key]) players[key] = { tips: {}, locked: false };
+                        
+                        const newLockedStatus = !players[key].locked;
+                        let updatedTips = { ...players[key].tips };
+                        
+                        if (!isCurrentlyLocked && newLockedStatus) {
+                            fixturesData.forEach(f => {
+                                const currentTip = updatedTips[f.id] || {};
+                                const tipH_isEmpty = currentTip.h === undefined || currentTip.h === "";
+                                const tipA_isEmpty = currentTip.a === undefined || currentTip.a === "";
+                                
+                                if (tipH_isEmpty || tipA_isEmpty) {
+                                    updatedTips[f.id] = {
+                                        h: tipH_isEmpty ? "0" : currentTip.h,
+                                        a: tipA_isEmpty ? "0" : currentTip.a
+                                    };
+                                }
+                            });
+                        }
+                        
                         return {
                             ...s,
-                            players: { ...players, [key]: { ...players[key], locked: !players[key].locked } }
+                            players: { 
+                                ...players, 
+                                [key]: { 
+                                    ...players[key], 
+                                    tips: updatedTips,
+                                    locked: newLockedStatus 
+                                } 
+                            }
                         };
                     });
                     setModalConfig(null);
@@ -837,7 +866,7 @@ const App = () => {
 
                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col gap-4">
                         <div>
-                            <h2 className="text-lg font-bold text-emerald-400">Lokal kopia</h2>
+                            <h2 className="text-lg font-bold text-emerald-400">Lokal Säkerhetskopia</h2>
                             <p className="text-slate-400 text-sm mt-1">
                                 Ladda ner hela databasen som JSON, eller läs in en tidigare sparad fil.<br/>
                             </p>
