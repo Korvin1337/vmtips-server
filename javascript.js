@@ -142,6 +142,7 @@ const App = () => {
     const [printMode, setPrintMode]           = useState(null);
     const [selectedPrintDate, setSelectedPrintDate] = useState("Torsdag 11 juni");
     const [modalConfig, setModalConfig]       = useState(null);
+    const [editNameValue, setEditNameValue]   = useState("");
 
     const [syncStatus, setSyncStatus]   = useState(SYNC.IDLE);
     const [syncError, setSyncError]     = useState("");
@@ -152,7 +153,6 @@ const App = () => {
 
     useEffect(() => {
         setSyncStatus(SYNC.LOADING);
-
         loadFromCloud()
             .then(record => {
                 const merged = { ...defaultAppState, ...record };
@@ -288,6 +288,88 @@ const App = () => {
                     setModalConfig(null);
                 }
             });
+        });
+    };
+
+    const handleEditPlayerName = () => {
+        requireAdmin(() => {
+            const oldName = browsedPlayer.trim();
+            if (!oldName || !state.players[oldName]) return;
+            
+            setEditNameValue(oldName);
+            
+            setModalConfig({
+                title: "Ändra Namn",
+                message: "",
+                type: "custom",
+                content: (
+                    <div className="flex flex-col gap-4">
+                        <div className="bg-slate-900 border border-slate-700 rounded-lg p-3">
+                            <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Nuvarande Namn</label>
+                            <p className="text-slate-400 cursor-not-allowed select-none">{oldName}</p>
+                        </div>
+                        <div>
+                            <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Nytt Namn</label>
+                            <input type="text"
+                                value={editNameValue}
+                                onChange={(e) => setEditNameValue(e.target.value)}
+                                onKeyDown={(e) => { if (e.key === 'Enter') confirmNameChange(oldName); }}
+                                autoFocus
+                                className="w-full bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:outline-none focus:border-emerald-500"
+                            />
+                        </div>
+                    </div>
+                ),
+                onConfirm: () => confirmNameChange(oldName)
+            });
+        });
+    };
+
+    useEffect(() => {
+        if (modalConfig && modalConfig.title === "Ändra Namn") {
+            setModalConfig(prev => ({
+                ...prev,
+                content: (
+                    <div className="flex flex-col gap-4">
+                        <div className="bg-slate-900 border border-slate-700 rounded-lg p-3">
+                            <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Nuvarande Namn</label>
+                            <p className="text-slate-400 cursor-not-allowed select-none">{browsedPlayer.trim()}</p>
+                        </div>
+                        <div>
+                            <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Nytt Namn</label>
+                            <input type="text"
+                                value={editNameValue}
+                                onChange={(e) => setEditNameValue(e.target.value)}
+                                onKeyDown={(e) => { if (e.key === 'Enter') confirmNameChange(browsedPlayer.trim()); }}
+                                autoFocus
+                                className="w-full bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:outline-none focus:border-emerald-500"
+                            />
+                        </div>
+                    </div>
+                ),
+                onConfirm: () => confirmNameChange(browsedPlayer.trim())
+            }));
+        }
+    }, [editNameValue]);
+
+    const confirmNameChange = (oldName) => {
+        setEditNameValue(currentVal => {
+            const newName = currentVal.trim();
+            if (newName && newName !== oldName) {
+                setState(s => {
+                    if (s.players[newName]) {
+                        alert("Namnet finns redan!");
+                        return s;
+                    }
+                    const newPlayers = { ...s.players };
+                    newPlayers[newName] = newPlayers[oldName];
+                    delete newPlayers[oldName];
+                    return { ...s, players: newPlayers };
+                });
+                setBrowsedPlayer(newName);
+            }
+            setModalConfig(null);
+            return currentVal;
         });
     };
 
@@ -513,12 +595,17 @@ const App = () => {
                     {fixturesData.map(f => {
                         const act = state.actual[f.id] || {};
                         let actStr = "–";
-                        if ((act.h !== undefined && act.h !== "") || (act.a !== undefined && act.a !== "")) {
-                            const finalActH = (act.h !== undefined && act.h !== "") ? act.h : "0";
-                            const finalActA = (act.a !== undefined && act.a !== "") ? act.a : "0";
+                        const actH_hasValue = act.h !== undefined && act.h !== "";
+                        const actA_hasValue = act.a !== undefined && act.a !== "";
+                        
+                        if (actH_hasValue || actA_hasValue) {
+                            const finalActH = actH_hasValue ? act.h : "0";
+                            const finalActA = actA_hasValue ? act.a : "0";
                             actStr = `${finalActH} – ${finalActA}`;
                         }
+                        
                         const locked = state.lockedDays?.[f.date] || false;
+                        
                         return (
                             <tr key={f.id} className="border-b border-slate-700/50 print-avoid-break">
                                 <td className="p-2 text-slate-300">
@@ -529,12 +616,18 @@ const App = () => {
                                 {playerKeys.map(p => {
                                     const tip = state.players[p]?.tips[f.id] || {};
                                     let tipStr = "";
-                                    if ((tip.h !== undefined && tip.h !== "") || (tip.a !== undefined && tip.a !== "")) {
-                                        const finalTipH = (tip.h !== undefined && tip.h !== "") ? tip.h : "0";
-                                        const finalTipA = (tip.a !== undefined && tip.a !== "") ? tip.a : "0";
+                                    
+                                    const tipH_hasValue = tip.h !== undefined && tip.h !== "";
+                                    const tipA_hasValue = tip.a !== undefined && tip.a !== "";
+                                    
+                                    if (tipH_hasValue || tipA_hasValue) {
+                                        const finalTipH = tipH_hasValue ? tip.h : "0";
+                                        const finalTipA = tipA_hasValue ? tip.a : "0";
                                         tipStr = `${finalTipH}–${finalTipA}`;
                                     }
+                                    
                                     const pts = calculateMatchScore(act.h, act.a, tip.h, tip.a, locked);
+                                    
                                     return (
                                         <td key={p} className="p-2 text-center border-l border-slate-700/50">
                                             {tipStr
@@ -560,6 +653,7 @@ const App = () => {
         const dateList = (printMode === 'day-single' || printMode === 'day-all')
             ? [[selectedPrintDate, groupedFixtures[selectedPrintDate]]]
             : Object.entries(groupedFixtures);
+            
         return (
             <div className="p-4 bg-slate-900 text-slate-100 min-h-screen">
                 <h1 className="text-3xl font-bold text-center text-emerald-400 mb-8 uppercase tracking-widest">VM Tips 2026</h1>
@@ -578,9 +672,14 @@ const App = () => {
                                         const act = state.actual[f.id] || {};
                                         const locked = state.lockedDays?.[f.date] || false;
                                         const pts = calculateMatchScore(act.h, act.a, tip.h, tip.a, locked);
-                                        const tH = (tip.h !== undefined && tip.h !== "") ? tip.h : "0";
-                                        const tA = (tip.a !== undefined && tip.a !== "") ? tip.a : "0";
-                                        const has = (tip.h !== undefined && tip.h !== "") || (tip.a !== undefined && tip.a !== "");
+                                        
+                                        const tipH_hasValue = tip.h !== undefined && tip.h !== "";
+                                        const tipA_hasValue = tip.a !== undefined && tip.a !== "";
+                                        const has = tipH_hasValue || tipA_hasValue;
+                                        
+                                        const tH = tipH_hasValue ? tip.h : "0";
+                                        const tA = tipA_hasValue ? tip.a : "0";
+                                        
                                         return (
                                             <div key={f.id} className="bg-slate-800 border border-slate-700 rounded-lg p-3 flex flex-row items-center gap-4">
                                                 <div className="w-20 shrink-0">
@@ -639,18 +738,34 @@ const App = () => {
 
             {modalConfig && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
-                    <div className="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl p-6 w-full max-w-md">
+                    <div className="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl p-6 w-full max-w-md relative">
+                        <button onClick={() => setModalConfig(null)}
+                            className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+                            aria-label="Stäng modal">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+
                         <h3 className={`text-xl font-bold mb-3 ${modalConfig.type === 'error' ? 'text-rose-400' : 'text-emerald-400'}`}>{modalConfig.title}</h3>
-                        <p className="text-slate-300 mb-6">{modalConfig.message}</p>
+                        
+                        {modalConfig.content ? (
+                            <div className="mb-6">{modalConfig.content}</div>
+                        ) : (
+                            <p className="text-slate-300 mb-6">{modalConfig.message}</p>
+                        )}
+
                         <div className="flex justify-end gap-3">
-                            <button onClick={() => setModalConfig(null)}
-                                className="px-4 py-2 rounded-lg font-bold text-sm bg-slate-700 hover:bg-slate-600 text-white transition-colors">
-                                {modalConfig.type === 'error' ? 'Stäng' : 'Avbryt'}
-                            </button>
-                            {modalConfig.type === 'confirm' && (
+                            {modalConfig.type !== 'custom' && (
+                                <button onClick={() => setModalConfig(null)}
+                                    className="px-4 py-2 rounded-lg font-bold text-sm bg-slate-700 hover:bg-slate-600 text-white transition-colors">
+                                    {modalConfig.type === 'error' ? 'Stäng' : 'Avbryt'}
+                                </button>
+                            )}
+                            {(modalConfig.type === 'confirm' || modalConfig.type === 'custom') && (
                                 <button onClick={modalConfig.onConfirm}
                                     className="px-4 py-2 rounded-lg font-bold text-sm bg-emerald-600 hover:bg-emerald-500 text-white transition-colors">
-                                    Bekräfta
+                                    {modalConfig.type === 'custom' ? 'Spara' : 'Bekräfta'}
                                 </button>
                             )}
                         </div>
@@ -722,10 +837,9 @@ const App = () => {
 
                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col gap-4">
                         <div>
-                            <h2 className="text-lg font-bold text-emerald-400">Lokal Säkerhetskopia</h2>
+                            <h2 className="text-lg font-bold text-emerald-400">Lokal kopia</h2>
                             <p className="text-slate-400 text-sm mt-1">
                                 Ladda ner hela databasen som JSON, eller läs in en tidigare sparad fil.<br/>
-                                <strong className="text-slate-300">Kostar 0 förfrågningar</strong> – sparas bara lokalt i din webbläsare.
                             </p>
                         </div>
                         <div className="flex gap-3 flex-wrap">
@@ -796,12 +910,17 @@ const App = () => {
                                 {fixturesData.map(f => {
                                     const act = state.actual[f.id] || {};
                                     let actStr = "–";
-                                    if ((act.h !== undefined && act.h !== "") || (act.a !== undefined && act.a !== "")) {
-                                        const finalActH = (act.h !== undefined && act.h !== "") ? act.h : "0";
-                                        const finalActA = (act.a !== undefined && act.a !== "") ? act.a : "0";
+                                    const actH_hasValue = act.h !== undefined && act.h !== "";
+                                    const actA_hasValue = act.a !== undefined && act.a !== "";
+                                    
+                                    if (actH_hasValue || actA_hasValue) {
+                                        const finalActH = actH_hasValue ? act.h : "0";
+                                        const finalActA = actA_hasValue ? act.a : "0";
                                         actStr = `${finalActH} – ${finalActA}`;
                                     }
+                                    
                                     const locked = state.lockedDays?.[f.date] || false;
+                                    
                                     return (
                                         <tr key={f.id} className="hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
                                             <td className="p-3 text-slate-300 sticky left-0 bg-slate-800 z-10 border-r border-slate-700/50">
@@ -812,12 +931,18 @@ const App = () => {
                                             {playerKeys.map(p => {
                                                 const tip = state.players[p]?.tips[f.id] || {};
                                                 let tipStr = "";
-                                                if ((tip.h !== undefined && tip.h !== "") || (tip.a !== undefined && tip.a !== "")) {
-                                                    const finalTipH = (tip.h !== undefined && tip.h !== "") ? tip.h : "0";
-                                                    const finalTipA = (tip.a !== undefined && tip.a !== "") ? tip.a : "0";
+                                                
+                                                const tipH_hasValue = tip.h !== undefined && tip.h !== "";
+                                                const tipA_hasValue = tip.a !== undefined && tip.a !== "";
+                                                
+                                                if (tipH_hasValue || tipA_hasValue) {
+                                                    const finalTipH = tipH_hasValue ? tip.h : "0";
+                                                    const finalTipA = tipA_hasValue ? tip.a : "0";
                                                     tipStr = `${finalTipH}–${finalTipA}`;
                                                 }
+                                                
                                                 const pts = calculateMatchScore(act.h, act.a, tip.h, tip.a, locked);
+                                                
                                                 return (
                                                     <td key={p} className="p-3 text-center border-l border-slate-700/50">
                                                         {tipStr
@@ -878,10 +1003,14 @@ const App = () => {
                                     <div className="text-slate-300">
                                         Vald Spelare: <span className="font-bold text-emerald-400">{browsedPlayer}</span>
                                     </div>
-                                    <div className="flex gap-2 w-full sm:w-auto">
+                                    <div className="flex gap-2 w-full sm:w-auto flex-wrap">
                                         <button onClick={toggleLock}
                                             className={`flex-1 sm:flex-none px-6 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap ${state.players[browsedPlayer.trim()].locked ? 'bg-rose-600 hover:bg-rose-500 text-white' : 'bg-emerald-600 hover:bg-emerald-500 text-white'}`}>
                                             {state.players[browsedPlayer.trim()].locked ? 'Lås Upp Tips' : 'Lås Denna Spelares Tips'}
+                                        </button>
+                                        <button onClick={handleEditPlayerName}
+                                            className="flex-1 sm:flex-none px-4 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap bg-blue-600 hover:bg-blue-500 text-white">
+                                            Ändra Namn
                                         </button>
                                         <button onClick={handleDeletePlayer}
                                             className="px-4 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap bg-slate-700 hover:bg-rose-600 text-slate-300 hover:text-white">
