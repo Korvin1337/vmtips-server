@@ -1,91 +1,86 @@
 const { useState, useEffect, useMemo, useRef, useCallback } = React;
 
-// ─── JSONBin config ────────────────────────────────────────────────────────────
-// Bin is PUBLIC  → read requires NO key
-// Bin is PUBLIC  → write still requires X-Master-Key (owner only)
 const BIN_ID     = '6a2a6a67f5f4af5e29dd5d26';
 const MASTER_KEY = '$2a$10$hMIAUZmGPHnRrjwR/6Ai7.dBiwaa5Ki2zhznO8PeNh4inpRkeyWHW';
 
 const JSONBIN_READ_URL  = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
 const JSONBIN_WRITE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-// ─── Sync status ───────────────────────────────────────────────────────────────
 const SYNC = { IDLE: 'idle', SAVING: 'saving', SAVED: 'saved', ERROR: 'error', LOADING: 'loading' };
 
-// ─── Fixtures ─────────────────────────────────────────────────────────────────
 const fixturesData = [
-    { id: 1,  date: "Torsdag 11 juni",  time: "21:00", home: "Mexiko",                   away: "Sydafrika",              tv: "TV4" },
-    { id: 2,  date: "Fredag 12 juni",   time: "04:00", home: "Sydkorea",                 away: "Tjeckien",               tv: "TV4" },
-    { id: 3,  date: "Fredag 12 juni",   time: "21:00", home: "Kanada",                   away: "Bosnien och Hercegovina",tv: "SVT" },
-    { id: 4,  date: "Lördag 13 juni",   time: "03:00", home: "USA",                      away: "Paraguay",               tv: "TV4" },
-    { id: 5,  date: "Lördag 13 juni",   time: "21:00", home: "Qatar",                    away: "Schweiz",                tv: "TV4" },
-    { id: 6,  date: "Söndag 14 juni",   time: "00:00", home: "Brasilien",                away: "Marocko",                tv: "SVT" },
-    { id: 7,  date: "Söndag 14 juni",   time: "03:00", home: "Haiti",                    away: "Skottland",              tv: "SVT" },
-    { id: 8,  date: "Söndag 14 juni",   time: "06:00", home: "Australien",               away: "Turkiet",                tv: "TV4" },
-    { id: 9,  date: "Söndag 14 juni",   time: "19:00", home: "Tyskland",                 away: "Curacao",                tv: "TV4" },
-    { id: 10, date: "Söndag 14 juni",   time: "22:00", home: "Nederländerna",            away: "Japan",                  tv: "TV4" },
-    { id: 11, date: "Måndag 15 juni",   time: "01:00", home: "Elfenbenskusten",          away: "Ecuador",                tv: "TV4" },
-    { id: 12, date: "Måndag 15 juni",   time: "04:00", home: "Sverige",                  away: "Tunisien",               tv: "SVT" },
-    { id: 13, date: "Måndag 15 juni",   time: "18:00", home: "Spanien",                  away: "Kap Verde",              tv: "SVT" },
-    { id: 14, date: "Måndag 15 juni",   time: "21:00", home: "Belgien",                  away: "Egypten",                tv: "SVT" },
-    { id: 15, date: "Tisdag 16 juni",   time: "00:00", home: "Saudiarabien",             away: "Uruguay",                tv: "TV4" },
-    { id: 16, date: "Tisdag 16 juni",   time: "03:00", home: "Iran",                     away: "Nya Zeeland",            tv: "TV4" },
-    { id: 17, date: "Tisdag 16 juni",   time: "21:00", home: "Frankrike",                away: "Senegal",                tv: "SVT" },
-    { id: 18, date: "Onsdag 17 juni",   time: "00:00", home: "Irak",                     away: "Norge",                  tv: "TV4" },
-    { id: 19, date: "Onsdag 17 juni",   time: "03:00", home: "Argentina",                away: "Algeriet",               tv: "TV4" },
-    { id: 20, date: "Onsdag 17 juni",   time: "06:00", home: "Österrike",                away: "Jordanien",              tv: "TV4" },
-    { id: 21, date: "Onsdag 17 juni",   time: "19:00", home: "Portugal",                 away: "Kongo-Kinshasa",         tv: "TV4" },
-    { id: 22, date: "Onsdag 17 juni",   time: "22:00", home: "England",                  away: "Kroatien",               tv: "TV4" },
-    { id: 23, date: "Torsdag 18 juni",  time: "01:00", home: "Ghana",                    away: "Panama",                 tv: "TV4" },
-    { id: 24, date: "Torsdag 18 juni",  time: "04:00", home: "Uzbekistan",               away: "Colombia",               tv: "TV4" },
-    { id: 25, date: "Torsdag 18 juni",  time: "18:00", home: "Tjeckien",                 away: "Sydafrika",              tv: "TV4" },
-    { id: 26, date: "Torsdag 18 juni",  time: "21:00", home: "Schweiz",                  away: "Bosnien och Hercegovina",tv: "TV4" },
-    { id: 27, date: "Fredag 19 juni",   time: "00:00", home: "Kanada",                   away: "Qatar",                  tv: "TV4" },
-    { id: 28, date: "Fredag 19 juni",   time: "03:00", home: "Mexiko",                   away: "Sydkorea",               tv: "TV4" },
-    { id: 29, date: "Fredag 19 juni",   time: "21:00", home: "USA",                      away: "Australien",             tv: "SVT" },
-    { id: 30, date: "Lördag 20 juni",   time: "00:00", home: "Skottland",                away: "Marocko",                tv: "SVT" },
-    { id: 31, date: "Lördag 20 juni",   time: "03:00", home: "Brasilien",                away: "Haiti",                  tv: "TV4" },
-    { id: 32, date: "Lördag 20 juni",   time: "06:00", home: "Turkiet",                  away: "Paraguay",               tv: "TV4" },
-    { id: 33, date: "Lördag 20 juni",   time: "19:00", home: "Nederländerna",            away: "Sverige",                tv: "TV4" },
-    { id: 34, date: "Lördag 20 juni",   time: "22:00", home: "Tyskland",                 away: "Elfenbenskusten",        tv: "TV4" },
-    { id: 35, date: "Söndag 21 juni",   time: "02:00", home: "Ecuador",                  away: "Curacao",                tv: "TV4" },
-    { id: 36, date: "Söndag 21 juni",   time: "06:00", home: "Tunisien",                 away: "Japan",                  tv: "SVT" },
-    { id: 37, date: "Söndag 21 juni",   time: "18:00", home: "Spanien",                  away: "Saudiarabien",           tv: "TV4" },
-    { id: 38, date: "Söndag 21 juni",   time: "21:00", home: "Belgien",                  away: "Iran",                   tv: "TV4" },
-    { id: 39, date: "Måndag 22 juni",   time: "00:00", home: "Uruguay",                  away: "Kap Verde",              tv: "TV4" },
-    { id: 40, date: "Måndag 22 juni",   time: "03:00", home: "Nya Zeeland",              away: "Egypten",                tv: "TV4" },
-    { id: 41, date: "Måndag 22 juni",   time: "19:00", home: "Argentina",                away: "Österrike",              tv: "SVT" },
-    { id: 42, date: "Måndag 22 juni",   time: "23:00", home: "Frankrike",                away: "Irak",                   tv: "SVT" },
-    { id: 43, date: "Tisdag 23 juni",   time: "02:00", home: "Norge",                    away: "Senegal",                tv: "SVT" },
-    { id: 44, date: "Tisdag 23 juni",   time: "05:00", home: "Jordanien",                away: "Algeriet",               tv: "TV4" },
-    { id: 45, date: "Tisdag 23 juni",   time: "19:00", home: "Portugal",                 away: "Uzbekistan",             tv: "SVT" },
-    { id: 46, date: "Tisdag 23 juni",   time: "22:00", home: "England",                  away: "Ghana",                  tv: "SVT" },
-    { id: 47, date: "Onsdag 24 juni",   time: "01:00", home: "Panama",                   away: "Kroatien",               tv: "TV4" },
-    { id: 48, date: "Onsdag 24 juni",   time: "04:00", home: "Colombia",                 away: "Kongo-Kinshasa",         tv: "TV4" },
-    { id: 49, date: "Onsdag 24 juni",   time: "21:00", home: "Schweiz",                  away: "Kanada",                 tv: "TV4" },
-    { id: 50, date: "Onsdag 24 juni",   time: "21:00", home: "Bosnien och Hercegovina",  away: "Qatar",                  tv: "TV4" },
-    { id: 51, date: "Torsdag 25 juni",  time: "00:00", home: "Marocko",                  away: "Haiti",                  tv: "TV4" },
-    { id: 52, date: "Torsdag 25 juni",  time: "00:00", home: "Skottland",                away: "Brasilien",              tv: "TV4" },
-    { id: 53, date: "Torsdag 25 juni",  time: "03:00", home: "Sydafrika",                away: "Sydkorea",               tv: "SVT" },
-    { id: 54, date: "Torsdag 25 juni",  time: "03:00", home: "Tjeckien",                 away: "Mexiko",                 tv: "SVT" },
-    { id: 55, date: "Torsdag 25 juni",  time: "22:00", home: "Curacao",                  away: "Elfenbenskusten",        tv: "SVT" },
-    { id: 56, date: "Torsdag 25 juni",  time: "22:00", home: "Ecuador",                  away: "Tyskland",               tv: "SVT" },
-    { id: 57, date: "Fredag 26 juni",   time: "01:00", home: "Tunisien",                 away: "Nederländerna",          tv: "SVT" },
-    { id: 58, date: "Fredag 26 juni",   time: "01:00", home: "Japan",                    away: "Sverige",                tv: "SVT" },
-    { id: 59, date: "Fredag 26 juni",   time: "04:00", home: "Turkiet",                  away: "USA",                    tv: "TV4" },
-    { id: 60, date: "Fredag 26 juni",   time: "04:00", home: "Paraguay",                 away: "Australien",             tv: "TV4" },
-    { id: 61, date: "Fredag 26 juni",   time: "21:00", home: "Norge",                    away: "Frankrike",              tv: "TV4" },
-    { id: 62, date: "Fredag 26 juni",   time: "21:00", home: "Senegal",                  away: "Irak",                   tv: "TV4" },
-    { id: 63, date: "Lördag 27 juni",   time: "02:00", home: "Kap Verde",                away: "Saudiarabien",           tv: "TV4" },
-    { id: 64, date: "Lördag 27 juni",   time: "02:00", home: "Uruguay",                  away: "Spanien",                tv: "TV4" },
-    { id: 65, date: "Lördag 27 juni",   time: "05:00", home: "Nya Zeeland",              away: "Belgien",                tv: "TV4" },
-    { id: 66, date: "Lördag 27 juni",   time: "05:00", home: "Egypten",                  away: "Iran",                   tv: "TV4" },
-    { id: 67, date: "Lördag 27 juni",   time: "23:00", home: "Panama",                   away: "England",                tv: "SVT" },
-    { id: 68, date: "Lördag 27 juni",   time: "23:00", home: "Kroatien",                 away: "Ghana",                  tv: "SVT" },
-    { id: 69, date: "Söndag 28 juni",   time: "01:30", home: "Kongo-Kinshasa",           away: "Uzbekistan",             tv: "TV4" },
-    { id: 70, date: "Söndag 28 juni",   time: "01:30", home: "Colombia",                 away: "Portugal",               tv: "TV4" },
-    { id: 71, date: "Söndag 28 juni",   time: "04:00", home: "Algeriet",                 away: "Österrike",              tv: "TV4" },
-    { id: 72, date: "Söndag 28 juni",   time: "04:00", home: "Jordanien",                away: "Argentina",              tv: "TV4" },
+    { id: 1,  date: "Torsdag 11 juni",  time: "21:00", home: "Mexiko",                    away: "Sydafrika",              tv: "TV4" },
+    { id: 2,  date: "Fredag 12 juni",   time: "04:00", home: "Sydkorea",                  away: "Tjeckien",               tv: "TV4" },
+    { id: 3,  date: "Fredag 12 juni",   time: "21:00", home: "Kanada",                    away: "Bosnien och Hercegovina",tv: "SVT" },
+    { id: 4,  date: "Lördag 13 juni",   time: "03:00", home: "USA",                       away: "Paraguay",               tv: "TV4" },
+    { id: 5,  date: "Lördag 13 juni",   time: "21:00", home: "Qatar",                     away: "Schweiz",                tv: "TV4" },
+    { id: 6,  date: "Söndag 14 juni",   time: "00:00", home: "Brasilien",                 away: "Marocko",                tv: "SVT" },
+    { id: 7,  date: "Söndag 14 juni",   time: "03:00", home: "Haiti",                     away: "Skottland",              tv: "SVT" },
+    { id: 8,  date: "Söndag 14 juni",   time: "06:00", home: "Australien",                away: "Turkiet",                tv: "TV4" },
+    { id: 9,  date: "Söndag 14 juni",   time: "19:00", home: "Tyskland",                  away: "Curacao",                tv: "TV4" },
+    { id: 10, date: "Söndag 14 juni",   time: "22:00", home: "Nederländerna",             away: "Japan",                  tv: "TV4" },
+    { id: 11, date: "Måndag 15 juni",   time: "01:00", home: "Elfenbenskusten",           away: "Ecuador",                tv: "TV4" },
+    { id: 12, date: "Måndag 15 juni",   time: "04:00", home: "Sverige",                   away: "Tunisien",               tv: "SVT" },
+    { id: 13, date: "Måndag 15 juni",   time: "18:00", home: "Spanien",                   away: "Kap Verde",              tv: "SVT" },
+    { id: 14, date: "Måndag 15 juni",   time: "21:00", home: "Belgien",                   away: "Egypten",                tv: "SVT" },
+    { id: 15, date: "Tisdag 16 juni",   time: "00:00", home: "Saudiarabien",              away: "Uruguay",                tv: "TV4" },
+    { id: 16, date: "Tisdag 16 juni",   time: "03:00", home: "Iran",                      away: "Nya Zeeland",            tv: "TV4" },
+    { id: 17, date: "Tisdag 16 juni",   time: "21:00", home: "Frankrike",                 away: "Senegal",                tv: "SVT" },
+    { id: 18, date: "Onsdag 17 juni",   time: "00:00", home: "Irak",                      away: "Norge",                  tv: "TV4" },
+    { id: 19, date: "Onsdag 17 juni",   time: "03:00", home: "Argentina",                 away: "Algeriet",               tv: "TV4" },
+    { id: 20, date: "Onsdag 17 juni",   time: "06:00", home: "Österrike",                 away: "Jordanien",              tv: "TV4" },
+    { id: 21, date: "Onsdag 17 juni",   time: "19:00", home: "Portugal",                  away: "Kongo-Kinshasa",         tv: "TV4" },
+    { id: 22, date: "Onsdag 17 juni",   time: "22:00", home: "England",                   away: "Kroatien",               tv: "TV4" },
+    { id: 23, date: "Torsdag 18 juni",  time: "01:00", home: "Ghana",                     away: "Panama",                 tv: "TV4" },
+    { id: 24, date: "Torsdag 18 juni",  time: "04:00", home: "Uzbekistan",                away: "Colombia",               tv: "TV4" },
+    { id: 25, date: "Torsdag 18 juni",  time: "18:00", home: "Tjeckien",                  away: "Sydafrika",              tv: "TV4" },
+    { id: 26, date: "Torsdag 18 juni",  time: "21:00", home: "Schweiz",                   away: "Bosnien och Hercegovina",tv: "TV4" },
+    { id: 27, date: "Fredag 19 juni",   time: "00:00", home: "Kanada",                    away: "Qatar",                  tv: "TV4" },
+    { id: 28, date: "Fredag 19 juni",   time: "03:00", home: "Mexiko",                    away: "Sydkorea",               tv: "TV4" },
+    { id: 29, date: "Fredag 19 juni",   time: "21:00", home: "USA",                       away: "Australien",             tv: "SVT" },
+    { id: 30, date: "Lördag 20 juni",   time: "00:00", home: "Skottland",                 away: "Marocko",                tv: "SVT" },
+    { id: 31, date: "Lördag 20 juni",   time: "03:00", home: "Brasilien",                 away: "Haiti",                  tv: "TV4" },
+    { id: 32, date: "Lördag 20 juni",   time: "06:00", home: "Turkiet",                   away: "Paraguay",               tv: "TV4" },
+    { id: 33, date: "Lördag 20 juni",   time: "19:00", home: "Nederländerna",             away: "Sverige",                tv: "TV4" },
+    { id: 34, date: "Lördag 20 juni",   time: "22:00", home: "Tyskland",                  away: "Elfenbenskusten",        tv: "TV4" },
+    { id: 35, date: "Söndag 21 juni",   time: "02:00", home: "Ecuador",                   away: "Curacao",                tv: "TV4" },
+    { id: 36, date: "Söndag 21 juni",   time: "06:00", home: "Tunisien",                  away: "Japan",                  tv: "SVT" },
+    { id: 37, date: "Söndag 21 juni",   time: "18:00", home: "Spanien",                   away: "Saudiarabien",           tv: "TV4" },
+    { id: 38, date: "Söndag 21 juni",   time: "21:00", home: "Belgien",                   away: "Iran",                   tv: "TV4" },
+    { id: 39, date: "Måndag 22 juni",   time: "00:00", home: "Uruguay",                   away: "Kap Verde",              tv: "TV4" },
+    { id: 40, date: "Måndag 22 juni",   time: "03:00", home: "Nya Zeeland",               away: "Egypten",                tv: "TV4" },
+    { id: 41, date: "Måndag 22 juni",   time: "19:00", home: "Argentina",                 away: "Österrike",              tv: "SVT" },
+    { id: 42, date: "Måndag 22 juni",   time: "23:00", home: "Frankrike",                 away: "Irak",                   tv: "SVT" },
+    { id: 43, date: "Tisdag 23 juni",   time: "02:00", home: "Norge",                     away: "Senegal",                tv: "SVT" },
+    { id: 44, date: "Tisdag 23 juni",   time: "05:00", home: "Jordanien",                 away: "Algeriet",               tv: "TV4" },
+    { id: 45, date: "Tisdag 23 juni",   time: "19:00", home: "Portugal",                  away: "Uzbekistan",             tv: "SVT" },
+    { id: 46, date: "Tisdag 23 juni",   time: "22:00", home: "England",                   away: "Ghana",                  tv: "SVT" },
+    { id: 47, date: "Onsdag 24 juni",   time: "01:00", home: "Panama",                    away: "Kroatien",               tv: "TV4" },
+    { id: 48, date: "Onsdag 24 juni",   time: "04:00", home: "Colombia",                  away: "Kongo-Kinshasa",         tv: "TV4" },
+    { id: 49, date: "Onsdag 24 juni",   time: "21:00", home: "Schweiz",                   away: "Kanada",                 tv: "TV4" },
+    { id: 50, date: "Onsdag 24 juni",   time: "21:00", home: "Bosnien och Hercegovina",   away: "Qatar",                  tv: "TV4" },
+    { id: 51, date: "Torsdag 25 juni",  time: "00:00", home: "Marocko",                   away: "Haiti",                  tv: "TV4" },
+    { id: 52, date: "Torsdag 25 juni",  time: "00:00", home: "Skottland",                 away: "Brasilien",              tv: "TV4" },
+    { id: 53, date: "Torsdag 25 juni",  time: "03:00", home: "Sydafrika",                 away: "Sydkorea",               tv: "SVT" },
+    { id: 54, date: "Torsdag 25 juni",  time: "03:00", home: "Tjeckien",                  away: "Mexiko",                 tv: "SVT" },
+    { id: 55, date: "Torsdag 25 juni",  time: "22:00", home: "Curacao",                   away: "Elfenbenskusten",        tv: "SVT" },
+    { id: 56, date: "Torsdag 25 juni",  time: "22:00", home: "Ecuador",                   away: "Tyskland",               tv: "SVT" },
+    { id: 57, date: "Fredag 26 juni",   time: "01:00", home: "Tunisien",                  away: "Nederländerna",          tv: "SVT" },
+    { id: 58, date: "Fredag 26 juni",   time: "01:00", home: "Japan",                     away: "Sverige",                tv: "SVT" },
+    { id: 59, date: "Fredag 26 juni",   time: "04:00", home: "Turkiet",                   away: "USA",                    tv: "TV4" },
+    { id: 60, date: "Fredag 26 juni",   time: "04:00", home: "Paraguay",                  away: "Australien",             tv: "TV4" },
+    { id: 61, date: "Fredag 26 juni",   time: "21:00", home: "Norge",                     away: "Frankrike",              tv: "TV4" },
+    { id: 62, date: "Fredag 26 juni",   time: "21:00", home: "Senegal",                   away: "Irak",                   tv: "TV4" },
+    { id: 63, date: "Lördag 27 juni",   time: "02:00", home: "Kap Verde",                 away: "Saudiarabien",           tv: "TV4" },
+    { id: 64, date: "Lördag 27 juni",   time: "02:00", home: "Uruguay",                   away: "Spanien",                tv: "TV4" },
+    { id: 65, date: "Lördag 27 juni",   time: "05:00", home: "Nya Zeeland",               away: "Belgien",                tv: "TV4" },
+    { id: 66, date: "Lördag 27 juni",   time: "05:00", home: "Egypten",                   away: "Iran",                   tv: "TV4" },
+    { id: 67, date: "Lördag 27 juni",   time: "23:00", home: "Panama",                    away: "England",                tv: "SVT" },
+    { id: 68, date: "Lördag 27 juni",   time: "23:00", home: "Kroatien",                  away: "Ghana",                  tv: "SVT" },
+    { id: 69, date: "Söndag 28 juni",   time: "01:30", home: "Kongo-Kinshasa",            away: "Uzbekistan",             tv: "TV4" },
+    { id: 70, date: "Söndag 28 juni",   time: "01:30", home: "Colombia",                  away: "Portugal",               tv: "TV4" },
+    { id: 71, date: "Söndag 28 juni",   time: "04:00", home: "Algeriet",                  away: "Österrike",              tv: "TV4" },
+    { id: 72, date: "Söndag 28 juni",   time: "04:00", home: "Jordanien",                 away: "Argentina",              tv: "TV4" },
 ];
 
 const defaultAppState = { players: {}, actual: {}, lockedDays: {} };
@@ -108,8 +103,6 @@ const calculateMatchScore = (actH, actA, tipH, tipA, isResultLocked) => {
     return (aSign === tSign ? 1 : 0) + (aH === tH && aA === tA ? 3 : 0);
 };
 
-// ─── JSONBin API calls ─────────────────────────────────────────────────────────
-// READ: bin is public → no key needed at all (saves a request header, works from any host)
 const loadFromCloud = async () => {
     const res = await fetch(JSONBIN_READ_URL);
     if (!res.ok) {
@@ -121,7 +114,6 @@ const loadFromCloud = async () => {
     return data.record;
 };
 
-// WRITE: always requires master key
 const saveToCloud = async (state) => {
     const res = await fetch(JSONBIN_WRITE_URL, {
         method: 'PUT',
@@ -138,7 +130,6 @@ const saveToCloud = async (state) => {
     return true;
 };
 
-// ─── App ───────────────────────────────────────────────────────────────────────
 const App = () => {
     const [state, setState]                   = useState(defaultAppState);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -147,12 +138,11 @@ const App = () => {
     const [browsedPlayer, setBrowsedPlayer]   = useState("");
     const [newPlayerName, setNewPlayerName]   = useState("");
     const [tab, setTab]                       = useState("tips");
-    const [appReady, setAppReady]             = useState(false);   // true once initial load done
+    const [appReady, setAppReady]             = useState(false);
     const [printMode, setPrintMode]           = useState(null);
     const [selectedPrintDate, setSelectedPrintDate] = useState("Torsdag 11 juni");
     const [modalConfig, setModalConfig]       = useState(null);
 
-    // Cloud sync state – used only in Settings tab
     const [syncStatus, setSyncStatus]   = useState(SYNC.IDLE);
     const [syncError, setSyncError]     = useState("");
     const [lastSynced, setLastSynced]   = useState(null);
@@ -160,7 +150,6 @@ const App = () => {
     const fileInputRef   = useRef(null);
     const ADMIN_PASSWORD = "VMTIPS2026";
 
-    // ── 1. Load on mount: cloud first, localStorage fallback ──────────────────
     useEffect(() => {
         setSyncStatus(SYNC.LOADING);
 
@@ -172,7 +161,6 @@ const App = () => {
                 if (keys.length > 0) setBrowsedPlayer(keys[0]);
                 setLastSynced(new Date());
                 setSyncStatus(SYNC.SAVED);
-                // Mirror to localStorage so offline fallback stays fresh
                 localStorage.setItem("vmtips_v3", JSON.stringify(merged));
             })
             .catch(err => {
@@ -190,17 +178,14 @@ const App = () => {
                 }
             })
             .finally(() => setAppReady(true));
-    }, []); // runs exactly once
+    }, []);
 
-    // ── 2. Keep localStorage in sync with every state change (free, unlimited) ─
-    //    NO cloud writes here at all.
     useEffect(() => {
         if (appReady) {
             localStorage.setItem("vmtips_v3", JSON.stringify(state));
         }
     }, [state, appReady]);
 
-    // ── 3. Print timer ────────────────────────────────────────────────────────
     useEffect(() => {
         if (printMode !== null) {
             const t = setTimeout(() => { window.print(); setPrintMode(null); }, 600);
@@ -208,7 +193,6 @@ const App = () => {
         }
     }, [printMode]);
 
-    // ── Manual: Save to cloud (costs 1 request) ───────────────────────────────
     const handleManualCloudSave = () => {
         if (!isAuthenticated) {
             setModalConfig({ title: "Åtkomst Nekad", message: "Endast Admin kan spara till molnet.", type: "error" });
@@ -228,7 +212,6 @@ const App = () => {
             });
     };
 
-    // ── Manual: Reload from cloud (costs 1 request) ───────────────────────────
     const handleManualCloudLoad = () => {
         setModalConfig({
             title: "Ladda från JSONBin",
@@ -256,7 +239,6 @@ const App = () => {
         });
     };
 
-    // ── Auth ──────────────────────────────────────────────────────────────────
     const requireAdmin = (cb) => {
         if (isAuthenticated) cb();
         else setModalConfig({ title: "Åtkomst Nekad", message: "Endast Admin kan utföra denna åtgärd.", type: "error" });
@@ -273,7 +255,6 @@ const App = () => {
         setHasAttemptedLogin(true);
     };
 
-    // ── Player management ─────────────────────────────────────────────────────
     const handlePlayerChange = useCallback((name) => setBrowsedPlayer(name), []);
 
     const handleAddPlayer = (e) => {
@@ -310,7 +291,6 @@ const App = () => {
         });
     };
 
-    // ── Score editing ─────────────────────────────────────────────────────────
     const updateTip = (id, field, val) => {
         const key = browsedPlayer.trim();
         if (!key) return;
@@ -394,7 +374,6 @@ const App = () => {
         });
     };
 
-    // ── Local JSON export / import ────────────────────────────────────────────
     const handleExport = () => {
         requireAdmin(() => {
             const a = document.createElement('a');
@@ -429,7 +408,6 @@ const App = () => {
         });
     };
 
-    // ── Leaderboard ───────────────────────────────────────────────────────────
     const leaderboard = useMemo(() => {
         return Object.entries(state.players).map(([name, data]) => {
             let pts = 0;
@@ -445,7 +423,6 @@ const App = () => {
     const uniqueDates = useMemo(() => Object.keys(groupedFixtures), []);
     const playerKeys  = Object.keys(state.players);
 
-    // ── Sync pill ─────────────────────────────────────────────────────────────
     const SyncPill = () => {
         const t = lastSynced
             ? lastSynced.toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
@@ -466,7 +443,6 @@ const App = () => {
         );
     };
 
-    // ── Score input group ─────────────────────────────────────────────────────
     const ScoreInputGroup = ({ id, field, val, disabled, isActual, date }) => {
         const v = (val === undefined || val === "") ? "" : val;
         const isDisabled = disabled || (!isActual && !isAuthenticated);
@@ -489,10 +465,6 @@ const App = () => {
             </div>
         );
     };
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // RENDER GATES
-    // ─────────────────────────────────────────────────────────────────────────
 
     if (!appReady) return (
         <div className="flex flex-col items-center justify-center min-h-screen gap-3 text-slate-400">
@@ -526,7 +498,6 @@ const App = () => {
         </div>
     );
 
-    // ── Print: overview ───────────────────────────────────────────────────────
     if (printMode === 'overview') return (
         <div className="p-4 bg-slate-900 text-slate-100 min-h-screen">
             <h1 className="text-3xl font-bold text-center text-emerald-400 mb-8 uppercase tracking-widest">VM Tips 2026 – Sammanställning</h1>
@@ -541,7 +512,12 @@ const App = () => {
                 <tbody>
                     {fixturesData.map(f => {
                         const act = state.actual[f.id] || {};
-                        const actStr = (act.h !== undefined && act.h !== "") ? `${act.h} – ${act.a ?? "0"}` : "–";
+                        let actStr = "–";
+                        if ((act.h !== undefined && act.h !== "") || (act.a !== undefined && act.a !== "")) {
+                            const finalActH = (act.h !== undefined && act.h !== "") ? act.h : "0";
+                            const finalActA = (act.a !== undefined && act.a !== "") ? act.a : "0";
+                            actStr = `${finalActH} – ${finalActA}`;
+                        }
                         const locked = state.lockedDays?.[f.date] || false;
                         return (
                             <tr key={f.id} className="border-b border-slate-700/50 print-avoid-break">
@@ -552,7 +528,12 @@ const App = () => {
                                 <td className="p-2 text-center font-bold text-white">{actStr}</td>
                                 {playerKeys.map(p => {
                                     const tip = state.players[p]?.tips[f.id] || {};
-                                    const tipStr = (tip.h !== undefined && tip.h !== "") ? `${tip.h}–${tip.a ?? "0"}` : "";
+                                    let tipStr = "";
+                                    if ((tip.h !== undefined && tip.h !== "") || (tip.a !== undefined && tip.a !== "")) {
+                                        const finalTipH = (tip.h !== undefined && tip.h !== "") ? tip.h : "0";
+                                        const finalTipA = (tip.a !== undefined && tip.a !== "") ? tip.a : "0";
+                                        tipStr = `${finalTipH}–${finalTipA}`;
+                                    }
                                     const pts = calculateMatchScore(act.h, act.a, tip.h, tip.a, locked);
                                     return (
                                         <td key={p} className="p-2 text-center border-l border-slate-700/50">
@@ -573,7 +554,6 @@ const App = () => {
         </div>
     );
 
-    // ── Print: other ──────────────────────────────────────────────────────────
     if (printMode !== null && printMode !== 'overview') {
         const leaderboardOnly = printMode === 'leaderboard';
         const toPrint  = (printMode === 'all' || printMode === 'day-all') ? playerKeys : [browsedPlayer.trim()];
@@ -654,13 +634,9 @@ const App = () => {
         );
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // MAIN UI
-    // ─────────────────────────────────────────────────────────────────────────
     return (
         <div className="max-w-4xl mx-auto p-4 md:p-6 relative">
 
-            {/* Modal */}
             {modalConfig && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
                     <div className="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl p-6 w-full max-w-md">
@@ -682,7 +658,6 @@ const App = () => {
                 </div>
             )}
 
-            {/* Header */}
             <header className="bg-slate-800 rounded-xl p-4 md:p-6 mb-6 shadow-lg border border-slate-700 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-emerald-400">VM Tips 2026</h1>
@@ -707,11 +682,9 @@ const App = () => {
                 </div>
             </header>
 
-            {/* ── Settings ── */}
             {tab === "settings" && (
                 <div className="flex flex-col gap-5">
 
-                    {/* Cloud sync card */}
                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col gap-5">
                         <div className="flex items-start justify-between gap-4 flex-wrap">
                             <div>
@@ -747,7 +720,6 @@ const App = () => {
                         </div>
                     </div>
 
-                    {/* Local JSON backup card */}
                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col gap-4">
                         <div>
                             <h2 className="text-lg font-bold text-emerald-400">Lokal Säkerhetskopia</h2>
@@ -771,7 +743,6 @@ const App = () => {
                 </div>
             )}
 
-            {/* ── Leaderboard ── */}
             {tab === "leaderboard" && (
                 <div className="flex flex-col gap-6">
                     <div className="bg-slate-800 rounded-xl shadow-lg border border-slate-700 overflow-hidden">
@@ -812,7 +783,6 @@ const App = () => {
                 </div>
             )}
 
-            {/* ── Overview ── */}
             {tab === "overview" && (
                 <div className="flex flex-col gap-6">
                     <div className="bg-slate-800 rounded-xl shadow-lg border border-slate-700 overflow-x-auto">
@@ -825,7 +795,12 @@ const App = () => {
                             <tbody>
                                 {fixturesData.map(f => {
                                     const act = state.actual[f.id] || {};
-                                    const actStr = (act.h !== undefined && act.h !== "") ? `${act.h} – ${act.a ?? "0"}` : "–";
+                                    let actStr = "–";
+                                    if ((act.h !== undefined && act.h !== "") || (act.a !== undefined && act.a !== "")) {
+                                        const finalActH = (act.h !== undefined && act.h !== "") ? act.h : "0";
+                                        const finalActA = (act.a !== undefined && act.a !== "") ? act.a : "0";
+                                        actStr = `${finalActH} – ${finalActA}`;
+                                    }
                                     const locked = state.lockedDays?.[f.date] || false;
                                     return (
                                         <tr key={f.id} className="hover:bg-slate-700/50 transition-colors border-b border-slate-700/50">
@@ -836,7 +811,12 @@ const App = () => {
                                             <td className="p-3 text-center font-bold text-white bg-slate-900/30">{actStr}</td>
                                             {playerKeys.map(p => {
                                                 const tip = state.players[p]?.tips[f.id] || {};
-                                                const tipStr = (tip.h !== undefined && tip.h !== "") ? `${tip.h}–${tip.a ?? "0"}` : "";
+                                                let tipStr = "";
+                                                if ((tip.h !== undefined && tip.h !== "") || (tip.a !== undefined && tip.a !== "")) {
+                                                    const finalTipH = (tip.h !== undefined && tip.h !== "") ? tip.h : "0";
+                                                    const finalTipA = (tip.a !== undefined && tip.a !== "") ? tip.a : "0";
+                                                    tipStr = `${finalTipH}–${finalTipA}`;
+                                                }
                                                 const pts = calculateMatchScore(act.h, act.a, tip.h, tip.a, locked);
                                                 return (
                                                     <td key={p} className="p-3 text-center border-l border-slate-700/50">
@@ -864,7 +844,6 @@ const App = () => {
                 </div>
             )}
 
-            {/* ── Tips & Admin ── */}
             {(tab === "tips" || tab === "admin") && (
                 <div>
                     {tab === "tips" && (
