@@ -599,6 +599,31 @@ const App = () => {
         );
     };
 
+    const PlayerControlPanel = () => {
+        if (!browsedPlayer.trim() || !state.players[browsedPlayer.trim()]) return null;
+        return (
+            <div className="mt-4 pt-4 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="text-slate-300">
+                    Vald Spelare: <span className="font-bold text-emerald-400">{browsedPlayer}</span>
+                </div>
+                <div className="flex gap-2 w-full sm:w-auto flex-wrap">
+                    <button onClick={toggleLock}
+                        className={`flex-1 sm:flex-none px-6 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap ${state.players[browsedPlayer.trim()].locked ? 'bg-rose-600 hover:bg-rose-500 text-white' : 'bg-emerald-600 hover:bg-emerald-500 text-white'}`}>
+                        {state.players[browsedPlayer.trim()].locked ? 'Lås Upp Tips' : 'Lås Denna Spelares Tips'}
+                    </button>
+                    <button onClick={handleEditPlayerName}
+                        className="flex-1 sm:flex-none px-4 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap bg-blue-600 hover:bg-blue-500 text-white">
+                        Ändra Namn
+                    </button>
+                    <button onClick={handleDeletePlayer}
+                        className="flex-1 sm:flex-none px-4 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap bg-slate-700 hover:bg-rose-600 text-slate-300 hover:text-white">
+                        Ta Bort
+                    </button>
+                </div>
+            </div>
+        );
+    };
+
     if (!appReady) return (
         <div className="flex flex-col items-center justify-center min-h-screen gap-3 text-slate-400">
             <div className="w-8 h-8 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin"></div>
@@ -1050,27 +1075,7 @@ const App = () => {
                                     </div>
                                 </div>
                             )}
-                            {browsedPlayer.trim() && state.players[browsedPlayer.trim()] && (
-                                <div className="mt-4 pt-4 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4">
-                                    <div className="text-slate-300">
-                                        Vald Spelare: <span className="font-bold text-emerald-400">{browsedPlayer}</span>
-                                    </div>
-                                    <div className="flex gap-2 w-full sm:w-auto flex-wrap">
-                                        <button onClick={toggleLock}
-                                            className={`flex-1 sm:flex-none px-6 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap ${state.players[browsedPlayer.trim()].locked ? 'bg-rose-600 hover:bg-rose-500 text-white' : 'bg-emerald-600 hover:bg-emerald-500 text-white'}`}>
-                                            {state.players[browsedPlayer.trim()].locked ? 'Lås Upp Tips' : 'Lås Denna Spelares Tips'}
-                                        </button>
-                                        <button onClick={handleEditPlayerName}
-                                            className="flex-1 sm:flex-none px-4 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap bg-blue-600 hover:bg-blue-500 text-white">
-                                            Ändra Namn
-                                        </button>
-                                        <button onClick={handleDeletePlayer}
-                                            className="px-4 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap bg-slate-700 hover:bg-rose-600 text-slate-300 hover:text-white">
-                                            Ta Bort
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
+                            <PlayerControlPanel />
                         </div>
                     )}
 
@@ -1127,6 +1132,10 @@ const App = () => {
 
                     {tab === "tips" && (
                         <div className="mt-8 mb-4 bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-md flex flex-col gap-6 items-center text-center">
+                            <PlayerControlPanel />
+                            
+                            <div className="w-full border-t border-slate-700/60 my-2"></div>
+                            
                             <div>
                                 <h3 className="text-lg font-bold text-emerald-400 mb-1">Exportera / Skriv ut (PDF)</h3>
                                 <p className="text-slate-400 text-sm max-w-md">Skriv ut rader eller spara som PDF med leaderboard inkluderat.</p>
