@@ -1190,6 +1190,3 @@ const App = () => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
-" I mean wait time is probably needed if you push "lås dag" or "lås spelare" maybe they happen to fast causing api rate limits. so a timeout between these probably needed ? i saw you had a setTimeout but it was set to 0. 
-
-But most importantly as of right now if i lock tips for a players that has untoched inputs / default zero values they dont get assigned automatically to 0 as you stated in the previous prompt message. Can you try fix this please?
