@@ -1,8 +1,7 @@
 const { useState, useEffect, useMemo, useRef, useCallback } = React;
 
 const BIN_ID = "6a2a6a67f5f4af5e29dd5d26";
-const MASTER_KEY =
-  "$2a$10$hMIAUZmGPHnRrjwR/6Ai7.dBiwaa5Ki2zhznO8PeNh4inpRkeyWHW";
+const MASTER_KEY = "$2a$10$hMIAUZmGPHnRrjwR/6Ai7.dBiwaa5Ki2zhznO8PeNh4inpRkeyWHW";
 
 const JSONBIN_READ_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
 const JSONBIN_WRITE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
