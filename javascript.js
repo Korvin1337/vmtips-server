@@ -1,7 +1,8 @@
 const { useState, useEffect, useMemo, useRef, useCallback } = React;
 
 const BIN_ID = "6a2a6a67f5f4af5e29dd5d26";
-const MASTER_KEY = "$2a$10$hMIAUZmGPHnRrjwR/6Ai7.dBiwaa5Ki2zhznO8PeNh4inpRkeyWHW";
+const MASTER_KEY =
+  "$2a$10$hMIAUZmGPHnRrjwR/6Ai7.dBiwaa5Ki2zhznO8PeNh4inpRkeyWHW";
 
 const JSONBIN_READ_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
 const JSONBIN_WRITE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
@@ -14,7 +15,7 @@ const SYNC = {
   LOADING: "loading",
 };
 
-const fixturesData = [
+const baseFixtures = [
   {
     id: 1,
     date: "Torsdag 11 juni",
@@ -593,13 +594,302 @@ const fixturesData = [
   },
 ];
 
-const defaultAppState = { players: {}, actual: {}, lockedDays: {} };
+const baseKnockout = [
+  {
+    id: 101,
+    group: "16-delsfinaler",
+    date: "29 juni",
+    time: "18:00",
+    home: "Tyskland",
+    away: "Paraguay",
+    tv: "TV4",
+  },
+  {
+    id: 102,
+    group: "16-delsfinaler",
+    date: "29 juni",
+    time: "21:00",
+    home: "Frankrike",
+    away: "Sverige",
+    tv: "SVT",
+  },
+  {
+    id: 103,
+    group: "16-delsfinaler",
+    date: "30 juni",
+    time: "18:00",
+    home: "Sydafrika",
+    away: "Kanada",
+    tv: "TV4",
+  },
+  {
+    id: 104,
+    group: "16-delsfinaler",
+    date: "30 juni",
+    time: "21:00",
+    home: "Nederländerna",
+    away: "Marocko",
+    tv: "SVT",
+  },
+  {
+    id: 105,
+    group: "16-delsfinaler",
+    date: "1 juli",
+    time: "18:00",
+    home: "Portugal",
+    away: "Kroatien",
+    tv: "TV4",
+  },
+  {
+    id: 106,
+    group: "16-delsfinaler",
+    date: "1 juli",
+    time: "21:00",
+    home: "Spanien",
+    away: "Österrike",
+    tv: "SVT",
+  },
+  {
+    id: 107,
+    group: "16-delsfinaler",
+    date: "2 juli",
+    time: "18:00",
+    home: "USA",
+    away: "Bosnien & Hercegovina",
+    tv: "TV4",
+  },
+  {
+    id: 108,
+    group: "16-delsfinaler",
+    date: "2 juli",
+    time: "21:00",
+    home: "Belgien",
+    away: "Senegal",
+    tv: "SVT",
+  },
+  {
+    id: 109,
+    group: "16-delsfinaler",
+    date: "3 juli",
+    time: "18:00",
+    home: "Brasilien",
+    away: "Japan",
+    tv: "TV4",
+  },
+  {
+    id: 110,
+    group: "16-delsfinaler",
+    date: "3 juli",
+    time: "21:00",
+    home: "Elfenbenskusten",
+    away: "Norge",
+    tv: "SVT",
+  },
+  {
+    id: 111,
+    group: "16-delsfinaler",
+    date: "4 juli",
+    time: "18:00",
+    home: "Mexiko",
+    away: "Ecuador",
+    tv: "TV4",
+  },
+  {
+    id: 112,
+    group: "16-delsfinaler",
+    date: "4 juli",
+    time: "21:00",
+    home: "England",
+    away: "Kongo-Kinshasa",
+    tv: "SVT",
+  },
+  {
+    id: 113,
+    group: "16-delsfinaler",
+    date: "5 juli",
+    time: "18:00",
+    home: "Argentina",
+    away: "Kap Verde",
+    tv: "TV4",
+  },
+  {
+    id: 114,
+    group: "16-delsfinaler",
+    date: "5 juli",
+    time: "21:00",
+    home: "Australien",
+    away: "Egypten",
+    tv: "SVT",
+  },
+  {
+    id: 115,
+    group: "16-delsfinaler",
+    date: "6 juli",
+    time: "18:00",
+    home: "Schweiz",
+    away: "Algeriet",
+    tv: "TV4",
+  },
+  {
+    id: 116,
+    group: "16-delsfinaler",
+    date: "6 juli",
+    time: "21:00",
+    home: "Colombia",
+    away: "Ghana",
+    tv: "SVT",
+  },
+  {
+    id: 201,
+    group: "Åttondelsfinaler",
+    date: "7 juli",
+    time: "20:00",
+    home: "Vinnare 101",
+    away: "Vinnare 102",
+    tv: "TV4",
+  },
+  {
+    id: 202,
+    group: "Åttondelsfinaler",
+    date: "7 juli",
+    time: "20:00",
+    home: "Vinnare 103",
+    away: "Vinnare 104",
+    tv: "SVT",
+  },
+  {
+    id: 203,
+    group: "Åttondelsfinaler",
+    date: "8 juli",
+    time: "20:00",
+    home: "Vinnare 105",
+    away: "Vinnare 106",
+    tv: "TV4",
+  },
+  {
+    id: 204,
+    group: "Åttondelsfinaler",
+    date: "8 juli",
+    time: "20:00",
+    home: "Vinnare 107",
+    away: "Vinnare 108",
+    tv: "SVT",
+  },
+  {
+    id: 205,
+    group: "Åttondelsfinaler",
+    date: "9 juli",
+    time: "20:00",
+    home: "Vinnare 109",
+    away: "Vinnare 110",
+    tv: "TV4",
+  },
+  {
+    id: 206,
+    group: "Åttondelsfinaler",
+    date: "9 juli",
+    time: "20:00",
+    home: "Vinnare 111",
+    away: "Vinnare 112",
+    tv: "SVT",
+  },
+  {
+    id: 207,
+    group: "Åttondelsfinaler",
+    date: "10 juli",
+    time: "20:00",
+    home: "Vinnare 113",
+    away: "Vinnare 114",
+    tv: "TV4",
+  },
+  {
+    id: 208,
+    group: "Åttondelsfinaler",
+    date: "10 juli",
+    time: "20:00",
+    home: "Vinnare 115",
+    away: "Vinnare 116",
+    tv: "SVT",
+  },
+  {
+    id: 301,
+    group: "Kvartsfinaler",
+    date: "12 juli",
+    time: "20:00",
+    home: "Vinnare 201",
+    away: "Vinnare 202",
+    tv: "TV4",
+  },
+  {
+    id: 302,
+    group: "Kvartsfinaler",
+    date: "12 juli",
+    time: "20:00",
+    home: "Vinnare 203",
+    away: "Vinnare 204",
+    tv: "SVT",
+  },
+  {
+    id: 303,
+    group: "Kvartsfinaler",
+    date: "13 juli",
+    time: "20:00",
+    home: "Vinnare 205",
+    away: "Vinnare 206",
+    tv: "TV4",
+  },
+  {
+    id: 304,
+    group: "Kvartsfinaler",
+    date: "13 juli",
+    time: "20:00",
+    home: "Vinnare 207",
+    away: "Vinnare 208",
+    tv: "SVT",
+  },
+  {
+    id: 401,
+    group: "Semifinaler",
+    date: "15 juli",
+    time: "20:00",
+    home: "Vinnare 301",
+    away: "Vinnare 302",
+    tv: "TV4",
+  },
+  {
+    id: 402,
+    group: "Semifinaler",
+    date: "16 juli",
+    time: "20:00",
+    home: "Vinnare 303",
+    away: "Vinnare 304",
+    tv: "SVT",
+  },
+  {
+    id: 501,
+    group: "Bronsmatch",
+    date: "18 juli",
+    time: "20:00",
+    home: "Förlorare 401",
+    away: "Förlorare 402",
+    tv: "TV4",
+  },
+  {
+    id: 502,
+    group: "Final",
+    date: "19 juli",
+    time: "20:00",
+    home: "Vinnare 401",
+    away: "Vinnare 402",
+    tv: "SVT",
+  },
+];
 
-const groupedFixtures = fixturesData.reduce((acc, f) => {
-  if (!acc[f.date]) acc[f.date] = [];
-  acc[f.date].push(f);
-  return acc;
-}, {});
+const fixturesGroup = baseFixtures.map((f) => ({ ...f, groupKey: f.date }));
+const fixturesKnockout = baseKnockout.map((f) => ({ ...f, groupKey: f.group }));
+const allFixtures = [...fixturesGroup, ...fixturesKnockout];
+
+const defaultAppState = { players: {}, actual: {}, lockedDays: {} };
 
 const calculateMatchScore = (actH, actA, tipH, tipA, isResultLocked) => {
   if (!isResultLocked) return 0;
@@ -650,16 +940,35 @@ const App = () => {
   const [browsedPlayer, setBrowsedPlayer] = useState("");
   const [newPlayerName, setNewPlayerName] = useState("");
   const [tab, setTab] = useState("tips");
+  const [phase, setPhase] = useState("gruppspel");
   const [appReady, setAppReady] = useState(false);
   const [printMode, setPrintMode] = useState(null);
   const [selectedPrintDate, setSelectedPrintDate] = useState("Torsdag 11 juni");
   const [modalConfig, setModalConfig] = useState(null);
   const [editNameValue, setEditNameValue] = useState("");
+
   const [syncStatus, setSyncStatus] = useState(SYNC.IDLE);
   const [syncError, setSyncError] = useState("");
   const [lastSynced, setLastSynced] = useState(null);
+
   const fileInputRef = useRef(null);
   const ADMIN_PASSWORD = "VMTIPS2026";
+
+  const activeFixtures =
+    phase === "gruppspel" ? fixturesGroup : fixturesKnockout;
+  const groupedFixtures = useMemo(() => {
+    return activeFixtures.reduce((acc, f) => {
+      if (!acc[f.groupKey]) acc[f.groupKey] = [];
+      acc[f.groupKey].push(f);
+      return acc;
+    }, {});
+  }, [activeFixtures]);
+
+  const uniqueDates = useMemo(
+    () => Object.keys(groupedFixtures),
+    [groupedFixtures],
+  );
+  const playerKeys = Object.keys(state.players);
 
   useEffect(() => {
     setSyncStatus(SYNC.LOADING);
@@ -674,7 +983,6 @@ const App = () => {
         localStorage.setItem("vmtips_v3", JSON.stringify(merged));
       })
       .catch((err) => {
-        console.warn("Cloud load failed, using localStorage:", err.message);
         setSyncError(err.message);
         setSyncStatus(SYNC.ERROR);
         const saved = localStorage.getItem("vmtips_v3");
@@ -705,6 +1013,12 @@ const App = () => {
       return () => clearTimeout(t);
     }
   }, [printMode]);
+
+  useEffect(() => {
+    if (uniqueDates.length > 0 && !uniqueDates.includes(selectedPrintDate)) {
+      setSelectedPrintDate(uniqueDates[0]);
+    }
+  }, [uniqueDates, selectedPrintDate]);
 
   const handleManualCloudSave = () => {
     if (!isAuthenticated) {
@@ -823,79 +1137,26 @@ const App = () => {
     requireAdmin(() => {
       const oldName = browsedPlayer.trim();
       if (!oldName || !state.players[oldName]) return;
+
       setEditNameValue(oldName);
+
       setModalConfig({
         title: "Ändra Namn",
-        message: "",
-        type: "custom",
-        content: (
-          <div className="flex flex-col gap-4">
-            <div className="bg-slate-900 border border-slate-700 rounded-lg p-3">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
-                Nuvarande Namn
-              </label>
-              <p className="text-slate-400 cursor-not-allowed select-none">
-                {oldName}
-              </p>
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
-                Nytt Namn
-              </label>
-              <input
-                type="text"
-                value={editNameValue}
-                onChange={(e) => setEditNameValue(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") confirmNameChange(oldName);
-                }}
-                autoFocus
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:outline-none focus:border-emerald-500"
-              />
-            </div>
-          </div>
-        ),
-        onConfirm: () => confirmNameChange(oldName),
+        type: "edit-name",
       });
     });
   };
 
-  useEffect(() => {
-    if (modalConfig && modalConfig.title === "Ändra Namn") {
-      setModalConfig((prev) => ({
-        ...prev,
-        content: (
-          <div className="flex flex-col gap-4">
-            <div className="bg-slate-900 border border-slate-700 rounded-lg p-3">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
-                Nuvarande Namn
-              </label>
-              <p className="text-slate-400 cursor-not-allowed select-none">
-                {browsedPlayer.trim()}
-              </p>
-            </div>
-            <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
-                Nytt Namn
-              </label>
-              <input
-                type="text"
-                value={editNameValue}
-                onChange={(e) => setEditNameValue(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter")
-                    confirmNameChange(browsedPlayer.trim());
-                }}
-                autoFocus
-                className="w-full bg-slate-900 border border-slate-600 rounded-lg p-3 text-white focus:outline-none focus:border-emerald-500"
-              />
-            </div>
-          </div>
-        ),
-        onConfirm: () => confirmNameChange(browsedPlayer.trim()),
-      }));
-    }
-  }, [editNameValue]);
+  const handleUpdateTeamName = (id, isHome, newName) => {
+    requireAdmin(() => {
+      setState((s) => {
+        const updated = allFixtures.map((f) =>
+          f.id === id ? { ...f, [isHome ? "home" : "away"]: newName } : f,
+        );
+        return s;
+      });
+    });
+  };
 
   const confirmNameChange = (oldName) => {
     setEditNameValue((currentVal) => {
@@ -953,10 +1214,13 @@ const App = () => {
     }));
   };
 
-  const adjustScore = (id, field, currentVal, delta, isActual, date) => {
-    const key = browsedPlayer.trim();
-    if (!isActual && (!key || state.players[key]?.locked)) return;
-    if (isActual && state.lockedDays?.[date]) return;
+  const adjustScore = (id, field, currentVal, delta, isActual, groupKey) => {
+    if (!isActual) {
+      const key = browsedPlayer.trim();
+      if (!key || state.players[key]?.locked) return;
+    } else {
+      if (state.lockedDays?.[groupKey]) return;
+    }
     const cur =
       currentVal !== undefined && currentVal !== ""
         ? parseInt(currentVal, 10)
@@ -966,22 +1230,28 @@ const App = () => {
     else updateTip(id, field, next);
   };
 
-  const toggleDayLock = (date) => {
+  const toggleDayLock = (groupKey) => {
     requireAdmin(() => {
       setModalConfig({
-        title: "Hantera Dagens Låsning",
-        message: `Vill du ändra låsstatus för "${date}"?`,
+        title: "Hantera Låsning",
+        message: `Vill du ändra låsstatus för "${groupKey}"?`,
         type: "confirm",
         onConfirm: () => {
           let updatedStateToSave;
+
           setState((s) => {
             updatedStateToSave = {
               ...s,
-              lockedDays: { ...s.lockedDays, [date]: !s.lockedDays?.[date] },
+              lockedDays: {
+                ...s.lockedDays,
+                [groupKey]: !s.lockedDays?.[groupKey],
+              },
             };
             return updatedStateToSave;
           });
+
           setModalConfig(null);
+
           setTimeout(() => {
             if (updatedStateToSave) {
               setSyncStatus(SYNC.SAVING);
@@ -1010,25 +1280,31 @@ const App = () => {
     requireAdmin(() => {
       const key = browsedPlayer.trim();
       if (!key) return;
+
       const isCurrentlyLocked = state.players[key]?.locked;
+
       setModalConfig({
         title: "Lås Spelare",
         message: `Ändra låsstatus för ${key}?`,
         type: "confirm",
         onConfirm: () => {
           let updatedStateToSave;
+
           setState((s) => {
             const players = { ...s.players };
             if (!players[key]) players[key] = { tips: {}, locked: false };
+
             const newLockedStatus = !players[key].locked;
             let updatedTips = { ...players[key].tips };
+
             if (!isCurrentlyLocked && newLockedStatus) {
-              fixturesData.forEach((f) => {
+              allFixtures.forEach((f) => {
                 const currentTip = updatedTips[f.id] || {};
                 const tipH_isEmpty =
                   currentTip.h === undefined || currentTip.h === "";
                 const tipA_isEmpty =
                   currentTip.a === undefined || currentTip.a === "";
+
                 if (tipH_isEmpty || tipA_isEmpty) {
                   updatedTips[f.id] = {
                     h: tipH_isEmpty ? "0" : currentTip.h,
@@ -1037,6 +1313,7 @@ const App = () => {
                 }
               });
             }
+
             updatedStateToSave = {
               ...s,
               players: {
@@ -1048,9 +1325,12 @@ const App = () => {
                 },
               },
             };
+
             return updatedStateToSave;
           });
+
           setModalConfig(null);
+
           setTimeout(() => {
             if (updatedStateToSave) {
               setSyncStatus(SYNC.SAVING);
@@ -1123,7 +1403,7 @@ const App = () => {
     return Object.entries(state.players)
       .map(([name, data]) => {
         let pts = 0;
-        fixturesData.forEach((f) => {
+        allFixtures.forEach((f) => {
           const act = state.actual[f.id] || {};
           const tip = data.tips[f.id] || {};
           pts += calculateMatchScore(
@@ -1131,16 +1411,13 @@ const App = () => {
             act.a,
             tip.h,
             tip.a,
-            state.lockedDays?.[f.date] || false,
+            state.lockedDays?.[f.groupKey] || false,
           );
         });
         return { name, pts, locked: data.locked };
       })
       .sort((a, b) => b.pts - a.pts);
   }, [state]);
-
-  const uniqueDates = useMemo(() => Object.keys(groupedFixtures), []);
-  const playerKeys = Object.keys(state.players);
 
   const SyncPill = () => {
     const t = lastSynced
@@ -1191,16 +1468,23 @@ const App = () => {
     );
   };
 
-  const ScoreInputGroup = ({ id, field, val, disabled, isActual, date }) => {
+  const ScoreInputGroup = ({
+    id,
+    field,
+    val,
+    disabled,
+    isActual,
+    groupKey,
+  }) => {
     const v = val === undefined || val === "" ? "" : val;
     const isDisabled = disabled || (!isActual && !isAuthenticated);
     return (
-      <div className="flex items-center bg-slate-900 border border-slate-700 rounded-md p-1 sm:p-0.5 select-none shrink-0 flex-1 sm:flex-none justify-between sm:justify-center w-full sm:w-auto">
+      <div className="flex items-center bg-slate-900 border border-slate-700 rounded-md sm:rounded-lg p-0.5 sm:p-1 select-none shrink-0">
         <button
           type="button"
           disabled={isDisabled || (v !== "" && parseInt(v) >= 9)}
-          onClick={() => adjustScore(id, field, v, 1, isActual, date)}
-          className="w-10 h-10 sm:w-6 sm:h-6 flex items-center justify-center bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-slate-300 disabled:text-slate-600 rounded font-black text-xs transition-colors disabled:opacity-40"
+          onClick={() => adjustScore(id, field, v, 1, isActual, groupKey)}
+          className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-slate-300 disabled:text-slate-600 rounded font-black text-xs sm:text-sm transition-colors disabled:opacity-40"
         >
           +
         </button>
@@ -1216,14 +1500,13 @@ const App = () => {
               ? updateActual(id, field, e.target.value)
               : updateTip(id, field, e.target.value)
           }
-          className="w-12 sm:w-7 bg-transparent text-center text-xl sm:text-sm font-bold text-white focus:outline-none disabled:opacity-50"
-          style={{ MozAppearance: "textfield" }}
+          className="w-6 sm:w-9 bg-transparent text-center text-sm sm:text-base font-bold text-white focus:outline-none disabled:opacity-50"
         />
         <button
           type="button"
           disabled={isDisabled || v === "0" || v === ""}
-          onClick={() => adjustScore(id, field, v, -1, isActual, date)}
-          className="w-10 h-10 sm:w-6 sm:h-6 flex items-center justify-center bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-slate-300 disabled:text-slate-600 rounded font-black text-xs transition-colors disabled:opacity-40"
+          onClick={() => adjustScore(id, field, v, -1, isActual, groupKey)}
+          className="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center bg-slate-800 hover:bg-slate-700 active:bg-slate-600 text-slate-300 disabled:text-slate-600 rounded font-black text-xs sm:text-sm transition-colors disabled:opacity-40"
         >
           &minus;
         </button>
@@ -1236,14 +1519,14 @@ const App = () => {
       return null;
     return (
       <div className="mt-4 pt-4 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4 w-full">
-        <div className="text-slate-300 text-center sm:text-left w-full sm:w-auto">
+        <div className="text-slate-300">
           Vald Spelare:{" "}
           <span className="font-bold text-emerald-400">{browsedPlayer}</span>
         </div>
-        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+        <div className="flex gap-2 w-full sm:w-auto flex-wrap">
           <button
             onClick={toggleLock}
-            className={`w-full sm:w-auto px-6 py-3 sm:py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap ${state.players[browsedPlayer.trim()].locked ? "bg-rose-600 hover:bg-rose-500 text-white" : "bg-emerald-600 hover:bg-emerald-500 text-white"}`}
+            className={`flex-1 sm:flex-none px-6 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap ${state.players[browsedPlayer.trim()].locked ? "bg-rose-600 hover:bg-rose-500 text-white" : "bg-emerald-600 hover:bg-emerald-500 text-white"}`}
           >
             {state.players[browsedPlayer.trim()].locked
               ? "Lås Upp Tips"
@@ -1251,13 +1534,13 @@ const App = () => {
           </button>
           <button
             onClick={handleEditPlayerName}
-            className="w-full sm:w-auto px-4 py-3 sm:py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap bg-blue-600 hover:bg-blue-500 text-white"
+            className="flex-1 sm:flex-none px-4 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap bg-blue-600 hover:bg-blue-500 text-white"
           >
             Ändra Namn
           </button>
           <button
             onClick={handleDeletePlayer}
-            className="w-full sm:w-auto px-4 py-3 sm:py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap bg-slate-700 hover:bg-rose-600 text-slate-300 hover:text-white"
+            className="flex-1 sm:flex-none px-4 py-2 rounded-lg font-bold shadow-sm transition-colors text-sm whitespace-nowrap bg-slate-700 hover:bg-rose-600 text-slate-300 hover:text-white"
           >
             Ta Bort
           </button>
@@ -1292,10 +1575,7 @@ const App = () => {
           </button>
         </div>
         <div className="w-full max-w-sm opacity-30 hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300">
-          <form
-            onSubmit={handleLoginSubmit}
-            className="flex flex-col gap-3 w-full"
-          >
+          <form onSubmit={handleLoginSubmit} className="flex flex-col gap-3">
             <label className="text-xs text-slate-500 uppercase tracking-widest text-center font-bold">
               Admin Inloggning
             </label>
@@ -1304,11 +1584,11 @@ const App = () => {
               value={loginAttempt}
               onChange={(e) => setLoginAttempt(e.target.value)}
               placeholder="Lösenord…"
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-white text-center focus:outline-none focus:border-emerald-500"
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white text-center focus:outline-none focus:border-emerald-500"
             />
             <button
               type="submit"
-              className="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-lg transition-colors text-sm"
+              className="w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-2.5 rounded-lg transition-colors text-sm"
             >
               Logga in som Admin
             </button>
@@ -1327,20 +1607,20 @@ const App = () => {
           <h1 className="text-3xl font-bold text-center text-emerald-400 mb-8 uppercase tracking-widest">
             VM Tips 2026 – Sammanställning
           </h1>
-          <div className="overflow-x-auto w-full">
-            <table className="w-full text-left border-collapse whitespace-nowrap min-w-max text-sm">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-slate-900/80">
-                  <th className="p-3 border-b border-slate-700 text-slate-400 font-medium sticky left-0 bg-slate-900 z-10 w-24 min-w-[6rem] max-w-[8rem] whitespace-normal break-words shadow-[1px_0_0_0_#334155]">
+                  <th className="p-2 border-b border-slate-700 text-slate-400 font-medium">
                     Match & Tid
                   </th>
-                  <th className="p-3 border-b border-slate-700 text-emerald-400 font-medium text-center">
+                  <th className="p-2 border-b border-slate-700 text-emerald-400 font-medium text-center">
                     Resultat
                   </th>
                   {playerKeys.map((p) => (
                     <th
                       key={p}
-                      className="p-3 border-b border-slate-700 text-slate-200 font-bold text-center border-l border-slate-700/50"
+                      className="p-2 border-b border-slate-700 text-slate-200 font-bold text-center border-l border-slate-700/50"
                     >
                       {p}
                     </th>
@@ -1348,41 +1628,53 @@ const App = () => {
                 </tr>
               </thead>
               <tbody>
-                {fixturesData.map((f) => {
+                {activeFixtures.map((f) => {
                   const act = state.actual[f.id] || {};
                   let actStr = "–";
                   const actH_hasValue = act.h !== undefined && act.h !== "";
                   const actA_hasValue = act.a !== undefined && act.a !== "";
+
                   if (actH_hasValue || actA_hasValue) {
-                    actStr = `${actH_hasValue ? act.h : "0"} – ${actA_hasValue ? act.a : "0"}`;
+                    const finalActH = actH_hasValue ? act.h : "0";
+                    const finalActA = actA_hasValue ? act.a : "0";
+                    actStr = `${finalActH} – ${finalActA}`;
                   }
-                  const locked = state.lockedDays?.[f.date] || false;
+
+                  const locked = state.lockedDays?.[f.groupKey] || false;
+
                   return (
                     <tr
                       key={f.id}
-                      className="hover:bg-slate-700/50 transition-colors border-b border-slate-700/50"
+                      className="border-b border-slate-700/50 print-avoid-break"
                     >
-                      <td className="p-3 text-slate-300 sticky left-0 bg-slate-800 z-10 w-24 min-w-[6rem] max-w-[8rem] whitespace-normal break-words shadow-[1px_0_0_0_#334155]">
+                      <td className="p-2 text-slate-300">
                         <div className="font-bold">
                           {f.home} – {f.away}
                         </div>
-                        <div className="text-xs text-slate-500 mt-1">
-                          {f.date} {f.time} ({f.tv})
+                        <div className="text-[10px] text-slate-500">
+                          {phase === "gruppspel"
+                            ? `${f.date} ${f.time}`
+                            : `${f.groupKey} ${f.date !== "-" ? f.date : ""} ${f.time !== "-" ? f.time : ""}`}
                         </div>
                       </td>
-                      <td className="p-3 text-center font-bold text-white bg-slate-900/30">
+                      <td className="p-2 text-center font-bold text-white">
                         {actStr}
                       </td>
                       {playerKeys.map((p) => {
                         const tip = state.players[p]?.tips[f.id] || {};
                         let tipStr = "";
+
                         const tipH_hasValue =
                           tip.h !== undefined && tip.h !== "";
                         const tipA_hasValue =
                           tip.a !== undefined && tip.a !== "";
+
                         if (tipH_hasValue || tipA_hasValue) {
-                          tipStr = `${tipH_hasValue ? tip.h : "0"}–${tipA_hasValue ? tip.a : "0"}`;
+                          const finalTipH = tipH_hasValue ? tip.h : "0";
+                          const finalTipA = tipA_hasValue ? tip.a : "0";
+                          tipStr = `${finalTipH}–${finalTipA}`;
                         }
+
                         const pts = calculateMatchScore(
                           act.h,
                           act.a,
@@ -1390,10 +1682,11 @@ const App = () => {
                           tip.a,
                           locked,
                         );
+
                         return (
                           <td
                             key={p}
-                            className="p-3 text-center border-l border-slate-700/50"
+                            className="p-2 text-center border-l border-slate-700/50"
                           >
                             {tipStr ? (
                               <div className="flex flex-col items-center">
@@ -1419,14 +1712,6 @@ const App = () => {
                 })}
               </tbody>
             </table>
-          </div>
-          <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 flex justify-center w-full mt-6">
-            <button
-              onClick={() => setPrintMode("overview")}
-              className="w-full sm:w-auto px-8 py-3 rounded-lg font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white"
-            >
-              Exportera / Skriv ut Översikt
-            </button>
           </div>
         </div>
       </div>
@@ -1459,16 +1744,16 @@ const App = () => {
                   <h2 className="text-2xl font-bold text-emerald-400">{pK}</h2>
                   <p className="text-slate-400 text-sm">Officiell Tipsrad</p>
                 </div>
-                {dateList.map(([date, matches]) => (
-                  <div key={date} className="mb-6 print-avoid-break">
+                {dateList.map(([groupKey, matches]) => (
+                  <div key={groupKey} className="mb-6 print-avoid-break">
                     <h3 className="text-emerald-500 font-bold text-lg mb-3 border-b border-slate-700 pb-1">
-                      {date}
+                      {groupKey}
                     </h3>
                     <div className="grid gap-2">
                       {matches.map((f) => {
                         const tip = state.players[pK]?.tips[f.id] || {};
                         const act = state.actual[f.id] || {};
-                        const locked = state.lockedDays?.[f.date] || false;
+                        const locked = state.lockedDays?.[f.groupKey] || false;
                         const pts = calculateMatchScore(
                           act.h,
                           act.a,
@@ -1476,61 +1761,64 @@ const App = () => {
                           tip.a,
                           locked,
                         );
+
                         const tipH_hasValue =
                           tip.h !== undefined && tip.h !== "";
                         const tipA_hasValue =
                           tip.a !== undefined && tip.a !== "";
                         const has = tipH_hasValue || tipA_hasValue;
+
                         const tH = tipH_hasValue ? tip.h : "0";
                         const tA = tipA_hasValue ? tip.a : "0";
+
                         return (
                           <div
                             key={f.id}
-                            className="bg-slate-800 border border-slate-700 rounded-lg p-3 sm:p-4 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full"
+                            className="bg-slate-800 border border-slate-700 rounded-lg p-3 flex flex-row items-center gap-4 w-full"
                           >
-                            <div className="w-full sm:w-16 shrink-0 flex sm:block justify-between items-center sm:text-center border-b border-slate-700/50 sm:border-0 pb-2 sm:pb-0">
+                            <div className="w-20 shrink-0 text-center sm:text-left">
                               <div className="text-slate-300 font-bold text-sm">
-                                {f.time}
+                                {f.time !== "-" ? f.time : "TBD"}
                               </div>
                               <div className="text-xs text-emerald-400">
-                                {f.tv}
+                                {f.tv !== "-" ? f.tv : ""}
                               </div>
                             </div>
-                            <div className="flex-1 min-w-0 flex flex-col sm:flex-row items-center gap-2 w-full">
+                            <div className="flex-1 w-full grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4 min-w-0">
                               <div
-                                className="flex-1 min-w-0 text-center sm:text-right font-medium text-slate-200 text-sm truncate w-full"
+                                className="text-right font-medium text-slate-200 text-xs sm:text-base truncate"
                                 title={f.home}
                               >
                                 {f.home}
                               </div>
                               {has ? (
-                                <div className="flex items-center justify-center gap-1 bg-slate-950 px-2 py-1 rounded border border-slate-700 shrink-0 w-full sm:w-auto">
-                                  <span className="w-5 text-center text-sm font-bold text-white">
+                                <div className="flex items-center justify-center gap-1 sm:gap-2 bg-slate-950 px-2 sm:px-3 py-1 sm:py-1.5 rounded border border-slate-700 shrink-0 mx-auto w-max">
+                                  <span className="w-5 sm:w-6 text-center text-sm sm:text-lg font-bold text-white">
                                     {tH}
                                   </span>
-                                  <span className="text-slate-500 font-extrabold text-xs">
+                                  <span className="text-slate-500 font-extrabold text-xs sm:text-base">
                                     &ndash;
                                   </span>
-                                  <span className="w-5 text-center text-sm font-bold text-white">
+                                  <span className="w-5 sm:w-6 text-center text-sm sm:text-lg font-bold text-white">
                                     {tA}
                                   </span>
                                 </div>
                               ) : (
-                                <div className="flex items-center justify-center bg-slate-900 px-2 py-1 rounded border border-slate-700/50 shrink-0 w-full sm:w-14">
+                                <div className="flex items-center justify-center bg-slate-900 px-2 sm:px-3 py-1 sm:py-1.5 rounded border border-slate-700/50 w-16 sm:w-20 shrink-0 mx-auto">
                                   <span className="text-slate-600 font-bold">
                                     –
                                   </span>
                                 </div>
                               )}
                               <div
-                                className="flex-1 min-w-0 text-center sm:text-left font-medium text-slate-200 text-sm truncate w-full"
+                                className="text-left font-medium text-slate-200 text-xs sm:text-base truncate"
                                 title={f.away}
                               >
                                 {f.away}
                               </div>
                             </div>
                             <div
-                              className={`w-full sm:w-14 shrink-0 text-center rounded-lg py-2 sm:py-1 font-bold text-sm border ${pts > 0 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-slate-900 text-slate-500 border-slate-700/60"}`}
+                              className={`w-16 shrink-0 text-center rounded-lg py-1 font-bold text-sm border ${pts > 0 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-slate-900 text-slate-500 border-slate-700/60"}`}
                             >
                               {pts} pt
                             </div>
@@ -1546,36 +1834,34 @@ const App = () => {
             <h2 className="text-2xl font-bold text-emerald-400 mb-4 uppercase text-center">
               Aktuell Leaderboard
             </h2>
-            <div className="overflow-x-auto w-full">
-              <table className="w-full text-left border-collapse whitespace-nowrap min-w-full">
-                <thead>
-                  <tr className="bg-slate-900/50">
-                    <th className="p-3 border-b border-slate-700 text-slate-400">
-                      Placering
-                    </th>
-                    <th className="p-4 border-b border-slate-700 text-slate-400">
-                      Spelare
-                    </th>
-                    <th className="p-3 border-b border-slate-700 text-right text-emerald-400">
-                      Poäng
-                    </th>
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-slate-900/50">
+                  <th className="p-3 border-b border-slate-700 text-slate-400">
+                    Placering
+                  </th>
+                  <th className="p-4 border-b border-slate-700 text-slate-400">
+                    Spelare
+                  </th>
+                  <th className="p-3 border-b border-slate-700 text-right text-emerald-400">
+                    Poäng
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {leaderboard.map((l, i) => (
+                  <tr key={l.name} className="border-b border-slate-700/50">
+                    <td className="p-3 text-lg font-bold text-slate-300">
+                      #{i + 1}
+                    </td>
+                    <td className="p-4 font-bold text-slate-100">{l.name}</td>
+                    <td className="p-3 text-right font-bold text-lg text-emerald-400">
+                      {l.pts}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {leaderboard.map((l, i) => (
-                    <tr key={l.name} className="border-b border-slate-700/50">
-                      <td className="p-3 text-lg font-bold text-slate-300">
-                        #{i + 1}
-                      </td>
-                      <td className="p-4 font-bold text-slate-100">{l.name}</td>
-                      <td className="p-3 text-right font-bold text-lg text-emerald-400">
-                        {l.pts}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -1608,11 +1894,13 @@ const App = () => {
                   />
                 </svg>
               </button>
+
               <h3
                 className={`text-xl font-bold mb-3 ${modalConfig.type === "error" ? "text-rose-400" : "text-emerald-400"}`}
               >
                 {modalConfig.title}
               </h3>
+
               {modalConfig.type === "edit-name" ? (
                 <div className="mb-6 flex flex-col gap-4">
                   <div className="bg-slate-900 border border-slate-700 rounded-lg p-3">
@@ -1645,6 +1933,7 @@ const App = () => {
               ) : (
                 <p className="text-slate-300 mb-6">{modalConfig.message}</p>
               )}
+
               <div className="flex justify-end gap-3">
                 {modalConfig.type !== "custom" &&
                   modalConfig.type !== "edit-name" && (
@@ -1683,12 +1972,12 @@ const App = () => {
           </div>
         )}
 
-        <header className="bg-slate-800 rounded-xl p-4 md:p-6 mb-6 shadow-lg border border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4 w-full">
-          <div className="w-full sm:w-auto flex flex-col items-center sm:items-start">
-            <h1 className="text-2xl font-bold text-emerald-400 text-center sm:text-left">
+        <header className="bg-slate-800 rounded-xl p-4 md:p-6 mb-6 shadow-lg border border-slate-700 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-emerald-400">
               VM Tips 2026
             </h1>
-            <p className="text-slate-400 text-sm text-center sm:text-left">
+            <p className="text-slate-400 text-sm">
               Läge:{" "}
               <span
                 className={`font-bold ${isAuthenticated ? "text-emerald-400" : "text-slate-300"}`}
@@ -1696,11 +1985,11 @@ const App = () => {
                 {isAuthenticated ? "Admin" : "Åskådare"}
               </span>
             </p>
-            <div className="mt-1 flex justify-center sm:justify-start w-full">
+            <div className="mt-1">
               <SyncPill />
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row bg-slate-900 rounded-lg p-1 border border-slate-700 gap-1 sm:flex-wrap justify-center w-full sm:w-auto">
+          <div className="flex bg-slate-900 rounded-lg p-1 border border-slate-700 flex-wrap justify-center">
             {[
               { key: "tips", label: "Tips rader" },
               { key: "leaderboard", label: "Leaderboard" },
@@ -1711,7 +2000,7 @@ const App = () => {
               <button
                 key={key}
                 onClick={() => setTab(key)}
-                className={`w-full sm:w-auto px-4 py-3 sm:py-2 rounded-md text-sm font-bold transition-colors ${tab === key ? "bg-emerald-600 text-white" : "text-slate-400 hover:text-white hover:bg-slate-800"}`}
+                className={`px-3 py-2 rounded-md text-xs md:text-sm font-bold transition-colors ${tab === key ? "bg-emerald-600 text-white" : "text-slate-400 hover:text-white"}`}
               >
                 {label}
               </button>
@@ -1719,10 +2008,27 @@ const App = () => {
           </div>
         </header>
 
+        {["tips", "admin", "overview"].includes(tab) && (
+          <div className="flex justify-center mb-6 gap-2 bg-slate-800 p-2 rounded-xl border border-slate-700 w-fit mx-auto shadow-md">
+            <button
+              onClick={() => setPhase("gruppspel")}
+              className={`px-5 py-2 rounded-lg text-sm font-bold transition-all ${phase === "gruppspel" ? "bg-emerald-600 text-white shadow-md" : "text-slate-400 hover:text-white hover:bg-slate-700"}`}
+            >
+              Gruppspel
+            </button>
+            <button
+              onClick={() => setPhase("slutspel")}
+              className={`px-5 py-2 rounded-lg text-sm font-bold transition-all ${phase === "slutspel" ? "bg-emerald-600 text-white shadow-md" : "text-slate-400 hover:text-white hover:bg-slate-700"}`}
+            >
+              Slutspel
+            </button>
+          </div>
+        )}
+
         {tab === "settings" && (
-          <div className="flex flex-col gap-5 w-full">
-            <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 sm:p-6 flex flex-col gap-5 w-full">
-              <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 w-full text-center sm:text-left">
+          <div className="flex flex-col gap-5">
+            <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col gap-5">
+              <div className="flex items-start justify-between gap-4 flex-wrap">
                 <div>
                   <h2 className="text-lg font-bold text-emerald-400">
                     JSONBin Molnsynk
@@ -1735,10 +2041,9 @@ const App = () => {
                     </strong>
                   </p>
                 </div>
-                <div className="w-full sm:w-auto flex justify-center sm:justify-end">
-                  <SyncPill />
-                </div>
+                <SyncPill />
               </div>
+
               {syncStatus === SYNC.ERROR && (
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4">
                   <p className="text-rose-400 text-sm font-bold mb-1">
@@ -1749,13 +2054,14 @@ const App = () => {
                   </p>
                 </div>
               )}
-              <div className="flex flex-col sm:flex-row gap-3 w-full">
+
+              <div className="flex gap-3 flex-wrap">
                 <button
                   onClick={handleManualCloudSave}
                   disabled={
                     syncStatus === SYNC.SAVING || syncStatus === SYNC.LOADING
                   }
-                  className="w-full sm:w-auto flex-1 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold py-4 sm:py-3 px-6 rounded-lg transition-colors text-sm shadow-md"
+                  className="flex-1 sm:flex-none bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold py-3 px-6 rounded-lg transition-colors text-sm shadow-md"
                 >
                   {syncStatus === SYNC.SAVING
                     ? "Sparar…"
@@ -1766,7 +2072,7 @@ const App = () => {
                   disabled={
                     syncStatus === SYNC.SAVING || syncStatus === SYNC.LOADING
                   }
-                  className="w-full sm:w-auto flex-1 bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-bold py-4 sm:py-3 px-6 rounded-lg transition-colors text-sm shadow-md"
+                  className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white font-bold py-3 px-6 rounded-lg transition-colors text-sm shadow-md"
                 >
                   {syncStatus === SYNC.LOADING
                     ? "Laddar…"
@@ -1774,8 +2080,9 @@ const App = () => {
                 </button>
               </div>
             </div>
-            <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 sm:p-6 flex flex-col gap-4 w-full">
-              <div className="text-center sm:text-left">
+
+            <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col gap-4">
+              <div>
                 <h2 className="text-lg font-bold text-emerald-400">
                   Lokal Säkerhetskopia
                 </h2>
@@ -1789,16 +2096,16 @@ const App = () => {
                   – sparas bara lokalt i din webbläsare.
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-3 w-full">
+              <div className="flex gap-3 flex-wrap">
                 <button
                   onClick={handleExport}
-                  className="w-full sm:w-auto flex-1 bg-slate-700 hover:bg-slate-600 text-white font-bold py-4 sm:py-3 px-6 rounded-lg transition-colors border border-slate-600 text-sm"
+                  className="flex-1 sm:flex-none bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-6 rounded-lg transition-colors border border-slate-600 text-sm"
                 >
                   ⬇ Ladda ner vmtips_backup.json
                 </button>
                 <button
                   onClick={() => fileInputRef.current.click()}
-                  className="w-full sm:w-auto flex-1 bg-slate-700 hover:bg-slate-600 text-white font-bold py-4 sm:py-3 px-6 rounded-lg transition-colors border border-slate-600 text-sm"
+                  className="flex-1 sm:flex-none bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-6 rounded-lg transition-colors border border-slate-600 text-sm"
                 >
                   ⬆ Ladda in JSON-fil
                 </button>
@@ -1815,9 +2122,9 @@ const App = () => {
         )}
 
         {tab === "leaderboard" && (
-          <div className="flex flex-col gap-6 w-full">
-            <div className="bg-slate-800 rounded-xl shadow-lg border border-slate-700 overflow-x-auto w-full">
-              <table className="w-full text-left border-collapse whitespace-nowrap min-w-full">
+          <div className="flex flex-col gap-6">
+            <div className="bg-slate-800 rounded-xl shadow-lg border border-slate-700 overflow-hidden">
+              <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-900/50">
                     <th className="p-4 border-b border-slate-700 text-slate-400 font-medium">
@@ -1876,10 +2183,10 @@ const App = () => {
               </table>
             </div>
             {playerKeys.length > 0 && (
-              <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 flex justify-center w-full">
+              <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 flex justify-center">
                 <button
                   onClick={() => setPrintMode("leaderboard")}
-                  className="w-full sm:w-auto px-8 py-4 sm:py-3 rounded-lg font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white"
+                  className="px-8 py-3 rounded-lg font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white"
                 >
                   Exportera / Skriv ut Leaderboard
                 </button>
@@ -1889,12 +2196,12 @@ const App = () => {
         )}
 
         {tab === "overview" && (
-          <div className="flex flex-col gap-6 w-full">
-            <div className="bg-slate-800 rounded-xl shadow-lg border border-slate-700 overflow-x-auto w-full">
-              <table className="w-full text-left border-collapse whitespace-nowrap text-sm min-w-full">
+          <div className="flex flex-col gap-6">
+            <div className="bg-slate-800 rounded-xl shadow-lg border border-slate-700 overflow-x-auto">
+              <table className="w-full text-left border-collapse whitespace-nowrap text-sm">
                 <thead>
                   <tr className="bg-slate-900/80">
-                    <th className="p-3 border-b border-slate-700 text-slate-400 font-medium sticky left-0 bg-slate-900 z-10 w-24 min-w-[6rem] max-w-[8rem] whitespace-normal break-words shadow-[1px_0_0_0_#334155]">
+                    <th className="p-3 border-b border-slate-700 text-slate-400 font-medium sticky left-0 bg-slate-900 z-10">
                       Match & Tid
                     </th>
                     <th className="p-3 border-b border-slate-700 text-emerald-400 font-medium text-center">
@@ -1911,26 +2218,33 @@ const App = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {fixturesData.map((f) => {
+                  {activeFixtures.map((f) => {
                     const act = state.actual[f.id] || {};
                     let actStr = "–";
                     const actH_hasValue = act.h !== undefined && act.h !== "";
                     const actA_hasValue = act.a !== undefined && act.a !== "";
+
                     if (actH_hasValue || actA_hasValue) {
-                      actStr = `${actH_hasValue ? act.h : "0"} – ${actA_hasValue ? act.a : "0"}`;
+                      const finalActH = actH_hasValue ? act.h : "0";
+                      const finalActA = actA_hasValue ? act.a : "0";
+                      actStr = `${finalActH} – ${finalActA}`;
                     }
-                    const locked = state.lockedDays?.[f.date] || false;
+
+                    const locked = state.lockedDays?.[f.groupKey] || false;
+
                     return (
                       <tr
                         key={f.id}
                         className="hover:bg-slate-700/50 transition-colors border-b border-slate-700/50"
                       >
-                        <td className="p-3 text-slate-300 sticky left-0 bg-slate-800 z-10 w-24 min-w-[6rem] max-w-[8rem] whitespace-normal break-words shadow-[1px_0_0_0_#334155]">
+                        <td className="p-3 text-slate-300 sticky left-0 bg-slate-800 z-10 border-r border-slate-700/50">
                           <div className="font-bold">
                             {f.home} – {f.away}
                           </div>
-                          <div className="text-xs text-slate-500 mt-1">
-                            {f.date} {f.time} ({f.tv})
+                          <div className="text-xs text-slate-500">
+                            {phase === "gruppspel"
+                              ? `${f.date} ${f.time}`
+                              : `${f.groupKey} ${f.date !== "-" ? f.date : ""} ${f.time !== "-" ? f.time : ""}`}
                           </div>
                         </td>
                         <td className="p-3 text-center font-bold text-white bg-slate-900/30">
@@ -1939,13 +2253,18 @@ const App = () => {
                         {playerKeys.map((p) => {
                           const tip = state.players[p]?.tips[f.id] || {};
                           let tipStr = "";
+
                           const tipH_hasValue =
                             tip.h !== undefined && tip.h !== "";
                           const tipA_hasValue =
                             tip.a !== undefined && tip.a !== "";
+
                           if (tipH_hasValue || tipA_hasValue) {
-                            tipStr = `${tipH_hasValue ? tip.h : "0"}–${tipA_hasValue ? tip.a : "0"}`;
+                            const finalTipH = tipH_hasValue ? tip.h : "0";
+                            const finalTipA = tipA_hasValue ? tip.a : "0";
+                            tipStr = `${finalTipH}–${finalTipA}`;
                           }
+
                           const pts = calculateMatchScore(
                             act.h,
                             act.a,
@@ -1953,6 +2272,7 @@ const App = () => {
                             tip.a,
                             locked,
                           );
+
                           return (
                             <td
                               key={p}
@@ -1983,10 +2303,10 @@ const App = () => {
                 </tbody>
               </table>
             </div>
-            <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 flex justify-center w-full">
+            <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 flex justify-center">
               <button
                 onClick={() => setPrintMode("overview")}
-                className="w-full sm:w-auto px-8 py-4 sm:py-3 rounded-lg font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white"
+                className="px-8 py-3 rounded-lg font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white"
               >
                 Exportera / Skriv ut Översikt
               </button>
@@ -1995,45 +2315,45 @@ const App = () => {
         )}
 
         {(tab === "tips" || tab === "admin") && (
-          <div className="w-full">
+          <div>
             {tab === "tips" && (
-              <div className="bg-slate-800 p-4 sm:p-6 rounded-xl border border-slate-700 shadow-md flex flex-col gap-6 mb-6 w-full">
-                <div className="w-full">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 text-center sm:text-left">
+              <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 shadow-md flex flex-col gap-4 mb-6">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">
                     Lägg till / Sök Spelare
                   </label>
                   <form
                     onSubmit={handleAddPlayer}
-                    className="flex flex-col sm:flex-row gap-3 w-full"
+                    className="flex flex-col md:flex-row gap-3"
                   >
                     <input
                       type="text"
                       value={newPlayerName}
                       onChange={(e) => setNewPlayerName(e.target.value)}
-                      placeholder="Skriv in namn och tryck enter…"
-                      className="w-full sm:flex-1 bg-slate-900 border border-slate-600 rounded-lg p-4 sm:p-3 text-white text-lg font-bold focus:outline-none focus:border-emerald-500 placeholder-slate-600 text-center sm:text-left"
+                      placeholder="Skriv in namn och tryck enter / lägg till…"
+                      className="flex-1 bg-slate-900 border border-slate-600 rounded-lg p-3 text-white text-lg font-bold focus:outline-none focus:border-emerald-500 placeholder-slate-600"
                     />
                     <button
                       type="submit"
                       disabled={!newPlayerName.trim() || !isAuthenticated}
-                      className="w-full sm:w-auto px-6 py-4 sm:py-3 rounded-lg font-bold shadow-sm transition-colors text-base sm:text-sm whitespace-nowrap bg-emerald-600 hover:bg-emerald-500 text-white disabled:opacity-30 disabled:cursor-not-allowed"
+                      className="px-6 py-3 rounded-lg font-bold shadow-sm transition-colors text-sm md:text-base whitespace-nowrap bg-emerald-600 hover:bg-emerald-500 text-white disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                       Lägg Till / Sök
                     </button>
                   </form>
                 </div>
                 {playerKeys.length > 0 && (
-                  <div className="w-full">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 text-center sm:text-left">
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
                       Välj Befintlig Spelare:
                     </label>
-                    <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 w-full">
+                    <div className="flex flex-wrap gap-2">
                       {playerKeys.map((p) => (
                         <button
                           key={p}
                           type="button"
                           onClick={() => handlePlayerChange(p)}
-                          className={`w-full sm:w-auto px-4 py-4 sm:py-2 rounded-lg font-bold text-base sm:text-sm transition-all border ${browsedPlayer === p ? "bg-emerald-600 text-white border-emerald-500 shadow-md" : "bg-slate-900 text-slate-300 border-slate-700 hover:bg-slate-700"}`}
+                          className={`px-4 py-2 rounded-lg font-bold text-sm transition-all border ${browsedPlayer === p ? "bg-emerald-600 text-white border-emerald-500 shadow-md" : "bg-slate-900 text-slate-300 border-slate-700 hover:bg-slate-700"}`}
                         >
                           {p}
                         </button>
@@ -2045,18 +2365,18 @@ const App = () => {
               </div>
             )}
 
-            {Object.entries(groupedFixtures).map(([date, matches]) => {
-              const isDayLocked = state.lockedDays?.[date];
+            {Object.entries(groupedFixtures).map(([groupKey, matches]) => {
+              const isDayLocked = state.lockedDays?.[groupKey];
               return (
-                <div key={date} className="mb-8 w-full">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 border-b border-slate-700 pb-2">
-                    <h2 className="text-emerald-500 font-bold text-xl sm:text-lg text-center sm:text-left">
-                      {date}
+                <div key={groupKey} className="mb-8">
+                  <div className="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
+                    <h2 className="text-emerald-500 font-bold text-lg">
+                      {groupKey}
                     </h2>
                     {tab === "admin" && (
                       <button
-                        onClick={() => toggleDayLock(date)}
-                        className={`w-full sm:w-auto px-4 py-3 sm:py-1 rounded-lg sm:rounded text-sm font-bold shadow-sm transition-colors ${isDayLocked ? "bg-rose-600 hover:bg-rose-500 text-white" : "bg-emerald-600 hover:bg-emerald-500 text-white"}`}
+                        onClick={() => toggleDayLock(groupKey)}
+                        className={`px-4 py-1 rounded text-sm font-bold shadow-sm transition-colors ${isDayLocked ? "bg-rose-600 hover:bg-rose-500 text-white" : "bg-emerald-600 hover:bg-emerald-500 text-white"}`}
                       >
                         {isDayLocked
                           ? "Lås Upp Dagen"
@@ -2064,7 +2384,7 @@ const App = () => {
                       </button>
                     )}
                   </div>
-                  <div className="grid gap-4 sm:gap-3 w-full">
+                  <div className="grid gap-3">
                     {matches.map((f) => {
                       const isTips = tab === "tips";
                       const key = browsedPlayer.trim();
@@ -2081,65 +2401,64 @@ const App = () => {
                             act.a,
                             matchData.h,
                             matchData.a,
-                            state.lockedDays?.[f.date],
+                            state.lockedDays?.[f.groupKey],
                           )
                         : null;
-
                       return (
                         <div
                           key={f.id}
-                          className={`bg-slate-800 border ${tab === "admin" && isDayLocked ? "border-rose-500/50" : "border-slate-700"} rounded-lg p-4 sm:p-3 shadow-sm hover:border-slate-600 transition-colors w-full`}
+                          className={`bg-slate-800 border ${tab === "admin" && isDayLocked ? "border-rose-500/50" : "border-slate-700"} rounded-lg p-3 sm:p-4 flex flex-col md:flex-row items-center gap-3 sm:gap-4 shadow-sm hover:border-slate-600 transition-colors w-full`}
                         >
-                          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-3 w-full min-w-0">
-                            <div className="w-full sm:w-16 shrink-0 flex sm:block justify-between items-center sm:text-center border-b border-slate-700/50 sm:border-0 pb-3 sm:pb-0">
-                              <div className="text-slate-300 font-bold text-lg sm:text-sm leading-tight">
-                                {f.time}
-                              </div>
-                              <div className="text-sm sm:text-xs text-emerald-400 font-medium">
-                                {f.tv}
-                              </div>
+                          <div className="text-center md:text-left md:w-20 shrink-0 text-sm sm:text-base">
+                            <div className="text-slate-300 font-bold">
+                              {f.time !== "-" ? f.time : "TBD"}
                             </div>
-
-                            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-2 w-full flex-1">
-                              <div className="w-full sm:flex-1 min-w-0 text-center sm:text-right font-medium text-slate-200 text-xl sm:text-sm truncate">
-                                {f.home}
-                              </div>
-
-                              <div className="flex items-center justify-center gap-2 sm:gap-1 bg-slate-950 px-2 sm:px-1.5 py-2 sm:py-1 rounded border border-slate-700 shrink-0 w-full sm:w-auto">
-                                <ScoreInputGroup
-                                  id={f.id}
-                                  field="h"
-                                  val={matchData.h}
-                                  disabled={isInputDisabled}
-                                  isActual={!isTips}
-                                  date={f.date}
-                                />
-                                <span className="text-slate-500 font-extrabold text-lg sm:text-sm shrink-0 px-1 sm:px-0.5">
-                                  &ndash;
-                                </span>
-                                <ScoreInputGroup
-                                  id={f.id}
-                                  field="a"
-                                  val={matchData.a}
-                                  disabled={isInputDisabled}
-                                  isActual={!isTips}
-                                  date={f.date}
-                                />
-                              </div>
-
-                              <div className="w-full sm:flex-1 min-w-0 text-center sm:text-left font-medium text-slate-200 text-xl sm:text-sm truncate">
-                                {f.away}
-                              </div>
+                            <div className="text-xs text-emerald-400 font-medium">
+                              {f.tv !== "-" ? f.tv : ""}
                             </div>
-
-                            {isTips && (
-                              <div
-                                className={`w-full sm:w-12 shrink-0 text-center rounded-lg py-3 sm:py-1 font-bold text-base sm:text-xs border ${pts > 0 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-slate-900 text-slate-500 border-slate-700/60"}`}
-                              >
-                                {pts} pt
-                              </div>
-                            )}
                           </div>
+                          <div className="flex-1 w-full grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 sm:gap-4">
+                            <div
+                              className="text-right font-medium text-slate-200 text-xs sm:text-base whitespace-nowrap overflow-hidden text-ellipsis"
+                              title={f.home}
+                            >
+                              {f.home}
+                            </div>
+                            <div className="flex items-center justify-center gap-1 sm:gap-3 bg-slate-950 px-2 sm:px-3 py-1 sm:py-1.5 rounded border border-slate-700 shrink-0 mx-auto w-max">
+                              <ScoreInputGroup
+                                id={f.id}
+                                field="h"
+                                val={matchData.h}
+                                disabled={isInputDisabled}
+                                isActual={!isTips}
+                                groupKey={f.groupKey}
+                              />
+                              <span className="text-slate-500 font-extrabold text-xs sm:text-lg shrink-0">
+                                &ndash;
+                              </span>
+                              <ScoreInputGroup
+                                id={f.id}
+                                field="a"
+                                val={matchData.a}
+                                disabled={isInputDisabled}
+                                isActual={!isTips}
+                                groupKey={f.groupKey}
+                              />
+                            </div>
+                            <div
+                              className="text-left font-medium text-slate-200 text-xs sm:text-base whitespace-nowrap overflow-hidden text-ellipsis"
+                              title={f.away}
+                            >
+                              {f.away}
+                            </div>
+                          </div>
+                          {isTips && (
+                            <div
+                              className={`md:w-16 shrink-0 text-center rounded-lg py-1.5 font-bold text-xs sm:text-sm border ${pts > 0 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-slate-900 text-slate-500 border-slate-700/60"}`}
+                            >
+                              {pts} pt
+                            </div>
+                          )}
                         </div>
                       );
                     })}
@@ -2149,24 +2468,26 @@ const App = () => {
             })}
 
             {tab === "tips" && (
-              <div className="mt-8 mb-4 bg-slate-800 p-4 sm:p-6 rounded-xl border border-slate-700 shadow-md flex flex-col gap-6 items-center text-center w-full">
+              <div className="mt-8 mb-4 bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-md flex flex-col gap-6 items-center text-center">
                 <PlayerControlPanel />
+
                 <div className="w-full border-t border-slate-700/60 my-2"></div>
-                <div className="w-full">
-                  <h3 className="text-lg font-bold text-emerald-400 mb-2">
+
+                <div>
+                  <h3 className="text-lg font-bold text-emerald-400 mb-1">
                     Exportera / Skriv ut (PDF)
                   </h3>
-                  <p className="text-slate-400 text-sm max-w-md mx-auto">
+                  <p className="text-slate-400 text-sm max-w-md">
                     Skriv ut rader eller spara som PDF med leaderboard
                     inkluderat.
                   </p>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-4 w-full pb-6 border-b border-slate-700/60 justify-center">
+                <div className="flex flex-col sm:flex-row gap-4 w-full pb-4 border-b border-slate-700/60 justify-center flex-wrap">
                   {browsedPlayer.trim() &&
                     state.players[browsedPlayer.trim()] && (
                       <button
                         onClick={() => setPrintMode("single")}
-                        className="w-full sm:w-auto px-6 py-4 sm:py-3 rounded-lg font-bold text-sm bg-emerald-600 hover:bg-emerald-500 text-white"
+                        className="px-6 py-3 rounded-lg font-bold text-sm bg-emerald-600 hover:bg-emerald-500 text-white w-full sm:w-auto"
                       >
                         Spara {browsedPlayer.trim()}s Tips + Leaderboard
                       </button>
@@ -2174,7 +2495,7 @@ const App = () => {
                   {playerKeys.length > 0 && (
                     <button
                       onClick={() => setPrintMode("all")}
-                      className="w-full sm:w-auto px-6 py-4 sm:py-3 rounded-lg font-bold text-sm bg-slate-700 hover:bg-slate-600 text-white border border-slate-600"
+                      className="px-6 py-3 rounded-lg font-bold text-sm bg-slate-700 hover:bg-slate-600 text-white border border-slate-600 w-full sm:w-auto"
                     >
                       Spara Allas Tips + Leaderboard
                     </button>
@@ -2182,21 +2503,21 @@ const App = () => {
                   {playerKeys.length > 0 && (
                     <button
                       onClick={() => setPrintMode("leaderboard")}
-                      className="w-full sm:w-auto px-6 py-4 sm:py-3 rounded-lg font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white"
+                      className="px-6 py-3 rounded-lg font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white w-full sm:w-auto"
                     >
                       Exportera Leaderboard
                     </button>
                   )}
                 </div>
                 <div className="w-full">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-                    Exportera en specifik dag:
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    Exportera en specifik dag/runda:
                   </label>
-                  <div className="flex flex-col sm:flex-row justify-center items-center gap-3 w-full">
+                  <div className="flex flex-col sm:flex-row justify-center items-center gap-3 flex-wrap">
                     <select
                       value={selectedPrintDate}
                       onChange={(e) => setSelectedPrintDate(e.target.value)}
-                      className="w-full sm:w-auto bg-slate-900 border border-slate-600 rounded-lg p-4 sm:p-2.5 text-white font-bold text-base sm:text-sm focus:outline-none focus:border-emerald-500 text-center"
+                      className="bg-slate-900 border border-slate-600 rounded-lg p-2.5 text-white font-bold text-sm focus:outline-none focus:border-emerald-500"
                     >
                       {uniqueDates.map((d) => (
                         <option key={d} value={d}>
@@ -2208,7 +2529,7 @@ const App = () => {
                       state.players[browsedPlayer.trim()] && (
                         <button
                           onClick={() => setPrintMode("day-single")}
-                          className="w-full sm:w-auto px-5 py-4 sm:py-2.5 rounded-lg font-bold text-sm sm:text-xs bg-emerald-600 hover:bg-emerald-500 text-white"
+                          className="px-5 py-2.5 rounded-lg font-bold text-xs bg-emerald-600 hover:bg-emerald-500 text-white w-full sm:w-auto"
                         >
                           Spara {browsedPlayer.trim()}s dag + Leaderboard
                         </button>
@@ -2216,7 +2537,7 @@ const App = () => {
                     {playerKeys.length > 0 && (
                       <button
                         onClick={() => setPrintMode("day-all")}
-                        className="w-full sm:w-auto px-5 py-4 sm:py-2.5 rounded-lg font-bold text-sm sm:text-xs bg-slate-700 hover:bg-slate-600 text-white border border-slate-600"
+                        className="px-5 py-2.5 rounded-lg font-bold text-xs bg-slate-700 hover:bg-slate-600 text-white border border-slate-600 w-full sm:w-auto"
                       >
                         Spara Allas dag + Leaderboard
                       </button>
