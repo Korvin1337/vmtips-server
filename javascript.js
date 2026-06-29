@@ -598,35 +598,35 @@ const baseKnockout = [
   {
     id: 101,
     group: "16-delsfinaler",
-    date: "29 juni",
-    time: "18:00",
-    home: "Tyskland",
-    away: "Paraguay",
-    tv: "TV4",
-  },
-  {
-    id: 102,
-    group: "16-delsfinaler",
-    date: "29 juni",
+    date: "Söndag 28 juni",
     time: "21:00",
-    home: "Frankrike",
-    away: "Sverige",
-    tv: "SVT",
-  },
-  {
-    id: 103,
-    group: "16-delsfinaler",
-    date: "30 juni",
-    time: "18:00",
     home: "Sydafrika",
     away: "Kanada",
     tv: "TV4",
   },
   {
+    id: 102,
+    group: "16-delsfinaler",
+    date: "Måndag 29 juni",
+    time: "19:00",
+    home: "Brasilien",
+    away: "Japan",
+    tv: "TV4",
+  },
+  {
+    id: 103,
+    group: "16-delsfinaler",
+    date: "Måndag 29 juni",
+    time: "22:30",
+    home: "Tyskland",
+    away: "Paraguay",
+    tv: "SVT",
+  },
+  {
     id: 104,
     group: "16-delsfinaler",
-    date: "30 juni",
-    time: "21:00",
+    date: "Tisdag 30 juni",
+    time: "03:00",
     home: "Nederländerna",
     away: "Marocko",
     tv: "SVT",
@@ -634,259 +634,272 @@ const baseKnockout = [
   {
     id: 105,
     group: "16-delsfinaler",
-    date: "1 juli",
-    time: "18:00",
-    home: "Portugal",
-    away: "Kroatien",
+    date: "Tisdag 30 juni",
+    time: "19:00",
+    home: "Elfenbenskusten",
+    away: "Norge",
     tv: "TV4",
   },
   {
     id: 106,
     group: "16-delsfinaler",
-    date: "1 juli",
+    date: "Tisdag 30 juni",
+    time: "23:00",
+    home: "Frankrike",
+    away: "Sverige",
+    tv: "TV4",
+  },
+  {
+    id: 107,
+    group: "16-delsfinaler",
+    date: "Onsdag 1 juli",
+    time: "03:00",
+    home: "Mexiko",
+    away: "Ecuador",
+    tv: "TV4",
+  },
+  {
+    id: 108,
+    group: "16-delsfinaler",
+    date: "Onsdag 1 juli",
+    time: "18:00",
+    home: "England",
+    away: "Kongo-Kinshasa",
+    tv: "SVT",
+  },
+  {
+    id: 109,
+    group: "16-delsfinaler",
+    date: "Onsdag 1 juli",
+    time: "22:00",
+    home: "Belgien",
+    away: "Senegal",
+    tv: "TV4",
+  },
+  {
+    id: 110,
+    group: "16-delsfinaler",
+    date: "Torsdag 2 juli",
+    time: "02:00",
+    home: "USA",
+    away: "Bosnien Hercegovina",
+    tv: "TV4",
+  },
+  {
+    id: 111,
+    group: "16-delsfinaler",
+    date: "Torsdag 2 juli",
     time: "21:00",
     home: "Spanien",
     away: "Österrike",
     tv: "SVT",
   },
   {
-    id: 107,
-    group: "16-delsfinaler",
-    date: "2 juli",
-    time: "18:00",
-    home: "USA",
-    away: "Bosnien & Hercegovina",
-    tv: "TV4",
-  },
-  {
-    id: 108,
-    group: "16-delsfinaler",
-    date: "2 juli",
-    time: "21:00",
-    home: "Belgien",
-    away: "Senegal",
-    tv: "SVT",
-  },
-  {
-    id: 109,
-    group: "16-delsfinaler",
-    date: "3 juli",
-    time: "18:00",
-    home: "Brasilien",
-    away: "Japan",
-    tv: "TV4",
-  },
-  {
-    id: 110,
-    group: "16-delsfinaler",
-    date: "3 juli",
-    time: "21:00",
-    home: "Elfenbenskusten",
-    away: "Norge",
-    tv: "SVT",
-  },
-  {
-    id: 111,
-    group: "16-delsfinaler",
-    date: "4 juli",
-    time: "18:00",
-    home: "Mexiko",
-    away: "Ecuador",
-    tv: "TV4",
-  },
-  {
     id: 112,
     group: "16-delsfinaler",
-    date: "4 juli",
-    time: "21:00",
-    home: "England",
-    away: "Kongo-Kinshasa",
-    tv: "SVT",
+    date: "Fredag 3 juli",
+    time: "01:00",
+    home: "Portugal",
+    away: "Kroatien",
+    tv: "TV4",
   },
   {
     id: 113,
     group: "16-delsfinaler",
-    date: "5 juli",
-    time: "18:00",
-    home: "Argentina",
-    away: "Kap Verde",
-    tv: "TV4",
-  },
-  {
-    id: 114,
-    group: "16-delsfinaler",
-    date: "5 juli",
-    time: "21:00",
-    home: "Australien",
-    away: "Egypten",
-    tv: "SVT",
-  },
-  {
-    id: 115,
-    group: "16-delsfinaler",
-    date: "6 juli",
-    time: "18:00",
+    date: "Fredag 3 juli",
+    time: "05:00",
     home: "Schweiz",
     away: "Algeriet",
     tv: "TV4",
   },
   {
+    id: 114,
+    group: "16-delsfinaler",
+    date: "Fredag 3 juli",
+    time: "20:00",
+    home: "Australien",
+    away: "Egypten",
+    tv: "TV4",
+  },
+  {
+    id: 115,
+    group: "16-delsfinaler",
+    date: "Lördag 4 juli",
+    time: "00:00",
+    home: "Argentina",
+    away: "Kap Verde",
+    tv: "SVT",
+  },
+  {
     id: 116,
     group: "16-delsfinaler",
-    date: "6 juli",
-    time: "21:00",
+    date: "Lördag 4 juli",
+    time: "03:30",
     home: "Colombia",
     away: "Ghana",
     tv: "SVT",
   },
+
   {
     id: 201,
     group: "Åttondelsfinaler",
-    date: "7 juli",
-    time: "20:00",
-    home: "Vinnare 101",
-    away: "Vinnare 102",
+    date: "Lördag 4 juli",
+    time: "19:00",
+    home: "Vinnare match 73",
+    away: "Vinnare match 75",
     tv: "TV4",
   },
   {
     id: 202,
     group: "Åttondelsfinaler",
-    date: "7 juli",
-    time: "20:00",
-    home: "Vinnare 103",
-    away: "Vinnare 104",
+    date: "Lördag 4 juli",
+    time: "23:00",
+    home: "Vinnare match 74",
+    away: "Vinnare match 77",
     tv: "SVT",
   },
   {
     id: 203,
     group: "Åttondelsfinaler",
-    date: "8 juli",
-    time: "20:00",
-    home: "Vinnare 105",
-    away: "Vinnare 106",
+    date: "Söndag 5 juli",
+    time: "22:00",
+    home: "Vinnare match 76",
+    away: "Vinnare match 78",
     tv: "TV4",
   },
   {
     id: 204,
     group: "Åttondelsfinaler",
-    date: "8 juli",
-    time: "20:00",
-    home: "Vinnare 107",
-    away: "Vinnare 108",
+    date: "Måndag 6 juli",
+    time: "02:00",
+    home: "Vinnare match 79",
+    away: "Vinnare match 80",
     tv: "SVT",
   },
   {
     id: 205,
     group: "Åttondelsfinaler",
-    date: "9 juli",
-    time: "20:00",
-    home: "Vinnare 109",
-    away: "Vinnare 110",
+    date: "Måndag 6 juli",
+    time: "21:00",
+    home: "Vinnare match 83",
+    away: "Vinnare match 84",
     tv: "TV4",
   },
   {
     id: 206,
     group: "Åttondelsfinaler",
-    date: "9 juli",
-    time: "20:00",
-    home: "Vinnare 111",
-    away: "Vinnare 112",
-    tv: "SVT",
+    date: "Tisdag 7 juli",
+    time: "02:00",
+    home: "Vinnare match 81",
+    away: "Vinnare match 82",
+    tv: "TV4",
   },
   {
     id: 207,
     group: "Åttondelsfinaler",
-    date: "10 juli",
-    time: "20:00",
-    home: "Vinnare 113",
-    away: "Vinnare 114",
+    date: "Tisdag 7 juli",
+    time: "18:00",
+    home: "Vinnare match 86",
+    away: "Vinnare match 88",
     tv: "TV4",
   },
   {
     id: 208,
     group: "Åttondelsfinaler",
-    date: "10 juli",
-    time: "20:00",
-    home: "Vinnare 115",
-    away: "Vinnare 116",
+    date: "Tisdag 7 juli",
+    time: "22:00",
+    home: "Vinnare match 85",
+    away: "Vinnare match 87",
     tv: "SVT",
   },
+
   {
     id: 301,
     group: "Kvartsfinaler",
-    date: "12 juli",
-    time: "20:00",
-    home: "Vinnare 201",
-    away: "Vinnare 202",
+    date: "Torsdag 9 juli",
+    time: "22:00",
+    home: "Vinnare match 89",
+    away: "Vinnare match 90",
     tv: "TV4",
   },
   {
     id: 302,
     group: "Kvartsfinaler",
-    date: "12 juli",
-    time: "20:00",
-    home: "Vinnare 203",
-    away: "Vinnare 204",
+    date: "Fredag 10 juli",
+    time: "21:00",
+    home: "Vinnare match 93",
+    away: "Vinnare match 94",
     tv: "SVT",
   },
   {
     id: 303,
     group: "Kvartsfinaler",
-    date: "13 juli",
-    time: "20:00",
-    home: "Vinnare 205",
-    away: "Vinnare 206",
+    date: "Lördag 11 juli",
+    time: "23:00",
+    home: "Vinnare match 91",
+    away: "Vinnare match 92",
     tv: "TV4",
   },
   {
     id: 304,
     group: "Kvartsfinaler",
-    date: "13 juli",
-    time: "20:00",
-    home: "Vinnare 207",
-    away: "Vinnare 208",
+    date: "Söndag 12 juli",
+    time: "03:00",
+    home: "Vinnare match 95",
+    away: "Vinnare match 96",
     tv: "SVT",
   },
+
   {
     id: 401,
     group: "Semifinaler",
-    date: "15 juli",
-    time: "20:00",
-    home: "Vinnare 301",
-    away: "Vinnare 302",
-    tv: "TV4",
+    date: "Tisdag 14 juli",
+    time: "21:00",
+    home: "Vinnare match 97",
+    away: "Vinnare match 98",
+    tv: "SVT",
   },
   {
     id: 402,
     group: "Semifinaler",
-    date: "16 juli",
-    time: "20:00",
-    home: "Vinnare 303",
-    away: "Vinnare 304",
-    tv: "SVT",
+    date: "Onsdag 15 juli",
+    time: "21:00",
+    home: "Vinnare match 99",
+    away: "Vinnare match 100",
+    tv: "TV4",
   },
+
   {
     id: 501,
     group: "Bronsmatch",
-    date: "18 juli",
-    time: "20:00",
-    home: "Förlorare 401",
-    away: "Förlorare 402",
-    tv: "TV4",
+    date: "Lördag 18 juli",
+    time: "23:00",
+    home: "Förlorare semi 1",
+    away: "Förlorare semi 2",
+    tv: "SVT",
   },
+
   {
     id: 502,
     group: "Final",
-    date: "19 juli",
-    time: "20:00",
-    home: "Vinnare 401",
-    away: "Vinnare 402",
-    tv: "SVT",
+    date: "Söndag 19 juli",
+    time: "21:00",
+    home: "Vinnare semi 1",
+    away: "Vinnare semi 2",
+    tv: "TV4",
   },
 ];
 
-const fixturesGroup = baseFixtures.map((f) => ({ ...f, groupKey: f.date }));
-const fixturesKnockout = baseKnockout.map((f) => ({ ...f, groupKey: f.group }));
+const fixturesGroup = baseFixtures.map((f) => ({
+  ...f,
+  groupKey: f.date,
+  phase: "gruppspel",
+}));
+const fixturesKnockout = baseKnockout.map((f) => ({
+  ...f,
+  groupKey: `${f.group} · ${f.date}`,
+  phase: "slutspel",
+}));
 const allFixtures = [...fixturesGroup, ...fixturesKnockout];
 
 const defaultAppState = { players: {}, actual: {}, lockedDays: {} };
@@ -919,10 +932,7 @@ const loadFromCloud = async () => {
 const saveToCloud = async (state) => {
   const res = await fetch(JSONBIN_WRITE_URL, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Master-Key": MASTER_KEY,
-    },
+    headers: { "Content-Type": "application/json", "X-Master-Key": MASTER_KEY },
     body: JSON.stringify(state),
   });
   if (!res.ok) {
@@ -946,7 +956,6 @@ const App = () => {
   const [selectedPrintDate, setSelectedPrintDate] = useState("Torsdag 11 juni");
   const [modalConfig, setModalConfig] = useState(null);
   const [editNameValue, setEditNameValue] = useState("");
-
   const [syncStatus, setSyncStatus] = useState(SYNC.IDLE);
   const [syncError, setSyncError] = useState("");
   const [lastSynced, setLastSynced] = useState(null);
@@ -999,9 +1008,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (appReady) {
-      localStorage.setItem("vmtips_v3", JSON.stringify(state));
-    }
+    if (appReady) localStorage.setItem("vmtips_v3", JSON.stringify(state));
   }, [state, appReady]);
 
   useEffect(() => {
@@ -1019,6 +1026,53 @@ const App = () => {
       setSelectedPrintDate(uniqueDates[0]);
     }
   }, [uniqueDates, selectedPrintDate]);
+
+  const leaderboard = useMemo(() => {
+    return Object.entries(state.players)
+      .map(([name, data]) => {
+        let groupPts = 0;
+        let knockoutPts = 0;
+        fixturesGroup.forEach((f) => {
+          const act = state.actual[f.id] || {};
+          const tip = data.tips[f.id] || {};
+          groupPts += calculateMatchScore(
+            act.h,
+            act.a,
+            tip.h,
+            tip.a,
+            state.lockedDays?.[f.groupKey] || false,
+          );
+        });
+        fixturesKnockout.forEach((f) => {
+          const act = state.actual[f.id] || {};
+          const tip = data.tips[f.id] || {};
+          knockoutPts += calculateMatchScore(
+            act.h,
+            act.a,
+            tip.h,
+            tip.a,
+            state.lockedDays?.[f.groupKey] || false,
+          );
+        });
+        return {
+          name,
+          groupPts,
+          knockoutPts,
+          totalPts: groupPts + knockoutPts,
+          locked: data.locked,
+        };
+      })
+      .sort((a, b) => b.totalPts - a.totalPts);
+  }, [state]);
+
+  const leaderboardGroup = useMemo(
+    () => [...leaderboard].sort((a, b) => b.groupPts - a.groupPts),
+    [leaderboard],
+  );
+  const leaderboardKnockout = useMemo(
+    () => [...leaderboard].sort((a, b) => b.knockoutPts - a.knockoutPts),
+    [leaderboard],
+  );
 
   const handleManualCloudSave = () => {
     if (!isAuthenticated) {
@@ -1091,7 +1145,6 @@ const App = () => {
     setIsAuthenticated(false);
     setHasAttemptedLogin(true);
   };
-
   const handlePlayerChange = useCallback((name) => setBrowsedPlayer(name), []);
 
   const handleAddPlayer = (e) => {
@@ -1137,24 +1190,8 @@ const App = () => {
     requireAdmin(() => {
       const oldName = browsedPlayer.trim();
       if (!oldName || !state.players[oldName]) return;
-
       setEditNameValue(oldName);
-
-      setModalConfig({
-        title: "Ändra Namn",
-        type: "edit-name",
-      });
-    });
-  };
-
-  const handleUpdateTeamName = (id, isHome, newName) => {
-    requireAdmin(() => {
-      setState((s) => {
-        const updated = allFixtures.map((f) =>
-          f.id === id ? { ...f, [isHome ? "home" : "away"]: newName } : f,
-        );
-        return s;
-      });
+      setModalConfig({ title: "Ändra Namn", type: "edit-name" });
     });
   };
 
@@ -1238,7 +1275,6 @@ const App = () => {
         type: "confirm",
         onConfirm: () => {
           let updatedStateToSave;
-
           setState((s) => {
             updatedStateToSave = {
               ...s,
@@ -1249,9 +1285,7 @@ const App = () => {
             };
             return updatedStateToSave;
           });
-
           setModalConfig(null);
-
           setTimeout(() => {
             if (updatedStateToSave) {
               setSyncStatus(SYNC.SAVING);
@@ -1280,23 +1314,18 @@ const App = () => {
     requireAdmin(() => {
       const key = browsedPlayer.trim();
       if (!key) return;
-
       const isCurrentlyLocked = state.players[key]?.locked;
-
       setModalConfig({
         title: "Lås Spelare",
         message: `Ändra låsstatus för ${key}?`,
         type: "confirm",
         onConfirm: () => {
           let updatedStateToSave;
-
           setState((s) => {
             const players = { ...s.players };
             if (!players[key]) players[key] = { tips: {}, locked: false };
-
             const newLockedStatus = !players[key].locked;
             let updatedTips = { ...players[key].tips };
-
             if (!isCurrentlyLocked && newLockedStatus) {
               allFixtures.forEach((f) => {
                 const currentTip = updatedTips[f.id] || {};
@@ -1304,7 +1333,6 @@ const App = () => {
                   currentTip.h === undefined || currentTip.h === "";
                 const tipA_isEmpty =
                   currentTip.a === undefined || currentTip.a === "";
-
                 if (tipH_isEmpty || tipA_isEmpty) {
                   updatedTips[f.id] = {
                     h: tipH_isEmpty ? "0" : currentTip.h,
@@ -1313,7 +1341,6 @@ const App = () => {
                 }
               });
             }
-
             updatedStateToSave = {
               ...s,
               players: {
@@ -1325,12 +1352,9 @@ const App = () => {
                 },
               },
             };
-
             return updatedStateToSave;
           });
-
           setModalConfig(null);
-
           setTimeout(() => {
             if (updatedStateToSave) {
               setSyncStatus(SYNC.SAVING);
@@ -1398,26 +1422,6 @@ const App = () => {
       e.target.value = "";
     });
   };
-
-  const leaderboard = useMemo(() => {
-    return Object.entries(state.players)
-      .map(([name, data]) => {
-        let pts = 0;
-        allFixtures.forEach((f) => {
-          const act = state.actual[f.id] || {};
-          const tip = data.tips[f.id] || {};
-          pts += calculateMatchScore(
-            act.h,
-            act.a,
-            tip.h,
-            tip.a,
-            state.lockedDays?.[f.groupKey] || false,
-          );
-        });
-        return { name, pts, locked: data.locked };
-      })
-      .sort((a, b) => b.pts - a.pts);
-  }, [state]);
 
   const SyncPill = () => {
     const t = lastSynced
@@ -1514,10 +1518,110 @@ const App = () => {
     );
   };
 
-  const PlayerControlPanel = () => {
-    if (!browsedPlayer.trim() || !state.players[browsedPlayer.trim()])
-      return null;
-    return (
+  const LeaderboardTable = ({
+    rows,
+    labelKey,
+    title,
+    accent,
+    showSubtotals,
+  }) => (
+    <div className="bg-slate-800 rounded-xl shadow-lg border border-slate-700 overflow-hidden">
+      {title && (
+        <div className="px-5 py-3 border-b border-slate-700 flex items-center gap-2">
+          <span
+            className={`text-base font-extrabold uppercase tracking-wider ${accent || "text-emerald-400"}`}
+          >
+            {title}
+          </span>
+        </div>
+      )}
+      <table className="w-full text-left border-collapse">
+        <thead>
+          <tr className="bg-slate-900/50">
+            <th className="p-4 border-b border-slate-700 text-slate-400 font-medium">
+              Placering
+            </th>
+            <th className="p-4 border-b border-slate-700 text-slate-400 font-medium">
+              Spelare
+            </th>
+            <th className="p-4 border-b border-slate-700 text-slate-400 font-medium">
+              Status
+            </th>
+            {showSubtotals && (
+              <>
+                <th className="p-4 border-b border-slate-700 text-slate-500 font-medium text-right text-xs">
+                  Grupp
+                </th>
+                <th className="p-4 border-b border-slate-700 text-slate-500 font-medium text-right text-xs">
+                  Slutspel
+                </th>
+              </>
+            )}
+            <th
+              className={`p-4 border-b border-slate-700 text-right font-bold ${accent || "text-emerald-400"}`}
+            >
+              Poäng
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((l, i) => (
+            <tr
+              key={l.name}
+              className="hover:bg-slate-700/50 transition-colors"
+            >
+              <td className="p-4 border-b border-slate-700 text-xl font-bold text-slate-300">
+                #{i + 1}
+              </td>
+              <td className="p-4 border-b border-slate-700 font-bold">
+                {l.name}
+              </td>
+              <td className="p-4 border-b border-slate-700">
+                {l.locked ? (
+                  <span className="text-xs bg-rose-500/20 text-rose-400 px-2 py-1 rounded border border-rose-500/30">
+                    Låst
+                  </span>
+                ) : (
+                  <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">
+                    Öppen
+                  </span>
+                )}
+              </td>
+              {showSubtotals && (
+                <>
+                  <td className="p-4 border-b border-slate-700 text-right text-slate-400 font-semibold">
+                    {l.groupPts}
+                  </td>
+                  <td className="p-4 border-b border-slate-700 text-right text-amber-400 font-semibold">
+                    {l.knockoutPts}
+                  </td>
+                </>
+              )}
+              <td
+                className={`p-4 border-b border-slate-700 text-right font-bold text-xl ${accent || "text-emerald-400"}`}
+              >
+                {l[labelKey]}
+              </td>
+            </tr>
+          ))}
+          {rows.length === 0 && (
+            <tr>
+              <td
+                colSpan={showSubtotals ? 6 : 4}
+                className="p-8 text-center text-slate-500"
+              >
+                Inga spelare har lagts till än.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+
+  let playerControlPanelJSX = null;
+  if (browsedPlayer.trim() && state.players[browsedPlayer.trim()]) {
+    playerControlPanelJSX = (
       <div className="mt-4 pt-4 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4 w-full">
         <div className="text-slate-300">
           Vald Spelare:{" "}
@@ -1547,7 +1651,7 @@ const App = () => {
         </div>
       </div>
     );
-  };
+  }
 
   if (!appReady)
     return (
@@ -1630,18 +1734,13 @@ const App = () => {
               <tbody>
                 {activeFixtures.map((f) => {
                   const act = state.actual[f.id] || {};
-                  let actStr = "–";
                   const actH_hasValue = act.h !== undefined && act.h !== "";
                   const actA_hasValue = act.a !== undefined && act.a !== "";
-
-                  if (actH_hasValue || actA_hasValue) {
-                    const finalActH = actH_hasValue ? act.h : "0";
-                    const finalActA = actA_hasValue ? act.a : "0";
-                    actStr = `${finalActH} – ${finalActA}`;
-                  }
-
+                  const actStr =
+                    actH_hasValue || actA_hasValue
+                      ? `${actH_hasValue ? act.h : "0"} – ${actA_hasValue ? act.a : "0"}`
+                      : "–";
                   const locked = state.lockedDays?.[f.groupKey] || false;
-
                   return (
                     <tr
                       key={f.id}
@@ -1653,8 +1752,8 @@ const App = () => {
                         </div>
                         <div className="text-[10px] text-slate-500">
                           {phase === "gruppspel"
-                            ? `${f.date} ${f.time}`
-                            : `${f.groupKey} ${f.date !== "-" ? f.date : ""} ${f.time !== "-" ? f.time : ""}`}
+                            ? `${f.date} kl ${f.time}`
+                            : `${f.groupKey} kl ${f.time}`}
                         </div>
                       </td>
                       <td className="p-2 text-center font-bold text-white">
@@ -1662,19 +1761,14 @@ const App = () => {
                       </td>
                       {playerKeys.map((p) => {
                         const tip = state.players[p]?.tips[f.id] || {};
-                        let tipStr = "";
-
                         const tipH_hasValue =
                           tip.h !== undefined && tip.h !== "";
                         const tipA_hasValue =
                           tip.a !== undefined && tip.a !== "";
-
-                        if (tipH_hasValue || tipA_hasValue) {
-                          const finalTipH = tipH_hasValue ? tip.h : "0";
-                          const finalTipA = tipA_hasValue ? tip.a : "0";
-                          tipStr = `${finalTipH}–${finalTipA}`;
-                        }
-
+                        const tipStr =
+                          tipH_hasValue || tipA_hasValue
+                            ? `${tipH_hasValue ? tip.h : "0"}–${tipA_hasValue ? tip.a : "0"}`
+                            : "";
                         const pts = calculateMatchScore(
                           act.h,
                           act.a,
@@ -1682,7 +1776,6 @@ const App = () => {
                           tip.a,
                           locked,
                         );
-
                         return (
                           <td
                             key={p}
@@ -1727,7 +1820,6 @@ const App = () => {
       printMode === "day-single" || printMode === "day-all"
         ? [[selectedPrintDate, groupedFixtures[selectedPrintDate]]]
         : Object.entries(groupedFixtures);
-
     return (
       <div className="p-4 bg-slate-900 text-slate-100 min-h-screen w-full max-w-[100vw]">
         <div className="max-w-4xl mx-auto">
@@ -1761,26 +1853,25 @@ const App = () => {
                           tip.a,
                           locked,
                         );
-
                         const tipH_hasValue =
                           tip.h !== undefined && tip.h !== "";
                         const tipA_hasValue =
                           tip.a !== undefined && tip.a !== "";
                         const has = tipH_hasValue || tipA_hasValue;
-
                         const tH = tipH_hasValue ? tip.h : "0";
                         const tA = tipA_hasValue ? tip.a : "0";
-
                         return (
                           <div
                             key={f.id}
                             className="bg-slate-800 border border-slate-700 rounded-lg p-3 flex flex-row items-center gap-4 w-full"
                           >
-                            <div className="w-20 shrink-0 text-center sm:text-left">
-                              <div className="text-slate-300 font-bold text-sm">
+                            <div className="w-20 shrink-0 text-center sm:text-left flex flex-col justify-center">
+                              <div className="text-slate-300 font-bold leading-none">
                                 {f.time !== "-" ? f.time : "TBD"}
                               </div>
-                              <div className="text-xs text-emerald-400">
+                              <div
+                                className={`text-[10px] sm:text-xs mt-0.5 font-medium ${phase === "slutspel" ? "text-amber-400" : "text-emerald-400"}`}
+                              >
                                 {f.tv !== "-" ? f.tv : ""}
                               </div>
                             </div>
@@ -1830,38 +1921,13 @@ const App = () => {
                 ))}
               </div>
             ))}
-          <div className="mt-12 bg-slate-800 rounded-xl p-6 border border-slate-700 print-avoid-break">
-            <h2 className="text-2xl font-bold text-emerald-400 mb-4 uppercase text-center">
-              Aktuell Leaderboard
-            </h2>
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-slate-900/50">
-                  <th className="p-3 border-b border-slate-700 text-slate-400">
-                    Placering
-                  </th>
-                  <th className="p-4 border-b border-slate-700 text-slate-400">
-                    Spelare
-                  </th>
-                  <th className="p-3 border-b border-slate-700 text-right text-emerald-400">
-                    Poäng
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {leaderboard.map((l, i) => (
-                  <tr key={l.name} className="border-b border-slate-700/50">
-                    <td className="p-3 text-lg font-bold text-slate-300">
-                      #{i + 1}
-                    </td>
-                    <td className="p-4 font-bold text-slate-100">{l.name}</td>
-                    <td className="p-3 text-right font-bold text-lg text-emerald-400">
-                      {l.pts}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mt-12">
+            <LeaderboardTable
+              rows={leaderboard}
+              labelKey="totalPts"
+              title="Aktuell Leaderboard (Totalt)"
+              showSubtotals={true}
+            />
           </div>
         </div>
       </div>
@@ -1894,13 +1960,11 @@ const App = () => {
                   />
                 </svg>
               </button>
-
               <h3
                 className={`text-xl font-bold mb-3 ${modalConfig.type === "error" ? "text-rose-400" : "text-emerald-400"}`}
               >
                 {modalConfig.title}
               </h3>
-
               {modalConfig.type === "edit-name" ? (
                 <div className="mb-6 flex flex-col gap-4">
                   <div className="bg-slate-900 border border-slate-700 rounded-lg p-3">
@@ -1933,7 +1997,6 @@ const App = () => {
               ) : (
                 <p className="text-slate-300 mb-6">{modalConfig.message}</p>
               )}
-
               <div className="flex justify-end gap-3">
                 {modalConfig.type !== "custom" &&
                   modalConfig.type !== "edit-name" && (
@@ -1989,10 +2052,12 @@ const App = () => {
               <SyncPill />
             </div>
           </div>
-          <div className="flex bg-slate-900 rounded-lg p-1 border border-slate-700 flex-wrap justify-center">
+          <div className="flex bg-slate-900 rounded-lg p-1 border border-slate-700 flex-wrap justify-center gap-0.5">
             {[
               { key: "tips", label: "Tips rader" },
-              { key: "leaderboard", label: "Leaderboard" },
+              { key: "leaderboard", label: "Grupp-LB" },
+              { key: "leaderboard-slutspel", label: "Slutspels-LB" },
+              { key: "leaderboard-total", label: "Total-LB" },
               { key: "admin", label: "Resultat" },
               { key: "overview", label: "Översikt" },
               { key: "settings", label: "Spara / Ladda" },
@@ -2018,7 +2083,7 @@ const App = () => {
             </button>
             <button
               onClick={() => setPhase("slutspel")}
-              className={`px-5 py-2 rounded-lg text-sm font-bold transition-all ${phase === "slutspel" ? "bg-emerald-600 text-white shadow-md" : "text-slate-400 hover:text-white hover:bg-slate-700"}`}
+              className={`px-5 py-2 rounded-lg text-sm font-bold transition-all ${phase === "slutspel" ? "bg-amber-600 text-white shadow-md" : "text-slate-400 hover:text-white hover:bg-slate-700"}`}
             >
               Slutspel
             </button>
@@ -2043,7 +2108,6 @@ const App = () => {
                 </div>
                 <SyncPill />
               </div>
-
               {syncStatus === SYNC.ERROR && (
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4">
                   <p className="text-rose-400 text-sm font-bold mb-1">
@@ -2054,7 +2118,6 @@ const App = () => {
                   </p>
                 </div>
               )}
-
               <div className="flex gap-3 flex-wrap">
                 <button
                   onClick={handleManualCloudSave}
@@ -2080,7 +2143,6 @@ const App = () => {
                 </button>
               </div>
             </div>
-
             <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 flex flex-col gap-4">
               <div>
                 <h2 className="text-lg font-bold text-emerald-400">
@@ -2089,11 +2151,6 @@ const App = () => {
                 <p className="text-slate-400 text-sm mt-1">
                   Ladda ner hela databasen som JSON, eller läs in en tidigare
                   sparad fil.
-                  <br />
-                  <strong className="text-slate-300">
-                    Kostar 0 förfrågningar
-                  </strong>{" "}
-                  – sparas bara lokalt i din webbläsare.
                 </p>
               </div>
               <div className="flex gap-3 flex-wrap">
@@ -2123,65 +2180,18 @@ const App = () => {
 
         {tab === "leaderboard" && (
           <div className="flex flex-col gap-6">
-            <div className="bg-slate-800 rounded-xl shadow-lg border border-slate-700 overflow-hidden">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-slate-900/50">
-                    <th className="p-4 border-b border-slate-700 text-slate-400 font-medium">
-                      Placering
-                    </th>
-                    <th className="p-4 border-b border-slate-700 text-slate-400 font-medium">
-                      Spelare
-                    </th>
-                    <th className="p-4 border-b border-slate-700 text-slate-400 font-medium">
-                      Status
-                    </th>
-                    <th className="p-4 border-b border-slate-700 text-right text-emerald-400 font-bold">
-                      Poäng
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {leaderboard.map((l, i) => (
-                    <tr
-                      key={l.name}
-                      className="hover:bg-slate-700/50 transition-colors"
-                    >
-                      <td className="p-4 border-b border-slate-700 text-xl font-bold text-slate-300">
-                        #{i + 1}
-                      </td>
-                      <td className="p-4 border-b border-slate-700 font-bold">
-                        {l.name}
-                      </td>
-                      <td className="p-4 border-b border-slate-700">
-                        {l.locked ? (
-                          <span className="text-xs bg-rose-500/20 text-rose-400 px-2 py-1 rounded border border-rose-500/30">
-                            Låst
-                          </span>
-                        ) : (
-                          <span className="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded border border-emerald-500/30">
-                            Öppen
-                          </span>
-                        )}
-                      </td>
-                      <td className="p-4 border-b border-slate-700 text-right font-bold text-xl text-emerald-400">
-                        {l.pts}
-                      </td>
-                    </tr>
-                  ))}
-                  {leaderboard.length === 0 && (
-                    <tr>
-                      <td
-                        colSpan="4"
-                        className="p-8 text-center text-slate-500"
-                      >
-                        Inga spelare har lagts till än.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+            <div className="flex items-center gap-3 mb-1">
+              <div className="h-0.5 flex-1 bg-gradient-to-r from-emerald-500/0 to-emerald-500/40 rounded"></div>
+              <span className="text-sm font-bold uppercase tracking-widest text-emerald-500">
+                Gruppspel · Poängställning
+              </span>
+              <div className="h-0.5 flex-1 bg-gradient-to-l from-emerald-500/0 to-emerald-500/40 rounded"></div>
             </div>
+            <LeaderboardTable
+              rows={leaderboardGroup}
+              labelKey="groupPts"
+              accent="text-emerald-400"
+            />
             {playerKeys.length > 0 && (
               <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 flex justify-center">
                 <button
@@ -2189,6 +2199,110 @@ const App = () => {
                   className="px-8 py-3 rounded-lg font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white"
                 >
                   Exportera / Skriv ut Leaderboard
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === "leaderboard-slutspel" && (
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center gap-3 mb-1">
+              <div className="h-0.5 flex-1 bg-gradient-to-r from-amber-500/0 to-amber-500/40 rounded"></div>
+              <span className="text-sm font-bold uppercase tracking-widest text-amber-500">
+                Slutspel · Poängställning
+              </span>
+              <div className="h-0.5 flex-1 bg-gradient-to-l from-amber-500/0 to-amber-500/40 rounded"></div>
+            </div>
+            <div className="bg-slate-800 rounded-xl border border-amber-500/20 p-4 overflow-x-auto">
+              <p className="text-xs font-bold uppercase tracking-wider text-amber-500 mb-3">
+                Inlagda slutspelsresultat
+              </p>
+              <div className="grid gap-2">
+                {fixturesKnockout
+                  .map((f) => {
+                    const act = state.actual[f.id] || {};
+                    const actH_hasValue = act.h !== undefined && act.h !== "";
+                    const actA_hasValue = act.a !== undefined && act.a !== "";
+                    const hasResult = actH_hasValue || actA_hasValue;
+                    const locked = state.lockedDays?.[f.groupKey] || false;
+                    if (!hasResult && !locked) return null;
+                    return (
+                      <div
+                        key={f.id}
+                        className="flex items-center gap-3 text-sm"
+                      >
+                        <span className="text-slate-500 text-xs w-28 shrink-0">
+                          {f.group}
+                        </span>
+                        <span className="text-slate-300 font-medium flex-1 truncate text-right">
+                          {f.home}
+                        </span>
+                        {hasResult ? (
+                          <span className="font-bold text-white px-2 py-0.5 bg-slate-900 rounded border border-slate-700 shrink-0">
+                            {actH_hasValue ? act.h : "0"} –{" "}
+                            {actA_hasValue ? act.a : "0"}
+                          </span>
+                        ) : (
+                          <span className="text-slate-600 px-2 py-0.5 shrink-0">
+                            –
+                          </span>
+                        )}
+                        <span className="text-slate-300 font-medium flex-1 truncate">
+                          {f.away}
+                        </span>
+                        {locked && (
+                          <span className="text-[10px] text-amber-400 border border-amber-500/30 rounded px-1.5 py-0.5 shrink-0">
+                            Låst
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })
+                  .filter(Boolean)}
+                {fixturesKnockout.every((f) => {
+                  const act = state.actual[f.id] || {};
+                  return (
+                    !(act.h !== undefined && act.h !== "") &&
+                    !(act.a !== undefined && act.a !== "")
+                  );
+                }) && (
+                  <p className="text-slate-500 text-sm py-2">
+                    Inga slutspelsresultat har lagts in ännu.
+                  </p>
+                )}
+              </div>
+            </div>
+            <LeaderboardTable
+              rows={leaderboardKnockout}
+              labelKey="knockoutPts"
+              accent="text-amber-400"
+            />
+          </div>
+        )}
+
+        {tab === "leaderboard-total" && (
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center gap-3 mb-1">
+              <div className="h-0.5 flex-1 bg-gradient-to-r from-violet-500/0 to-violet-500/40 rounded"></div>
+              <span className="text-sm font-bold uppercase tracking-widest text-violet-400">
+                Totalt · Grupp + Slutspel
+              </span>
+              <div className="h-0.5 flex-1 bg-gradient-to-l from-violet-500/0 to-violet-500/40 rounded"></div>
+            </div>
+            <LeaderboardTable
+              rows={leaderboard}
+              labelKey="totalPts"
+              accent="text-violet-400"
+              showSubtotals
+            />
+            {playerKeys.length > 0 && (
+              <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 flex justify-center">
+                <button
+                  onClick={() => setPrintMode("leaderboard")}
+                  className="px-8 py-3 rounded-lg font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white"
+                >
+                  Exportera / Skriv ut Total-Leaderboard
                 </button>
               </div>
             )}
@@ -2220,18 +2334,13 @@ const App = () => {
                 <tbody>
                   {activeFixtures.map((f) => {
                     const act = state.actual[f.id] || {};
-                    let actStr = "–";
                     const actH_hasValue = act.h !== undefined && act.h !== "";
                     const actA_hasValue = act.a !== undefined && act.a !== "";
-
-                    if (actH_hasValue || actA_hasValue) {
-                      const finalActH = actH_hasValue ? act.h : "0";
-                      const finalActA = actA_hasValue ? act.a : "0";
-                      actStr = `${finalActH} – ${finalActA}`;
-                    }
-
+                    const actStr =
+                      actH_hasValue || actA_hasValue
+                        ? `${actH_hasValue ? act.h : "0"} – ${actA_hasValue ? act.a : "0"}`
+                        : "–";
                     const locked = state.lockedDays?.[f.groupKey] || false;
-
                     return (
                       <tr
                         key={f.id}
@@ -2243,8 +2352,8 @@ const App = () => {
                           </div>
                           <div className="text-xs text-slate-500">
                             {phase === "gruppspel"
-                              ? `${f.date} ${f.time}`
-                              : `${f.groupKey} ${f.date !== "-" ? f.date : ""} ${f.time !== "-" ? f.time : ""}`}
+                              ? `${f.date} kl ${f.time}`
+                              : `${f.groupKey} kl ${f.time}`}
                           </div>
                         </td>
                         <td className="p-3 text-center font-bold text-white bg-slate-900/30">
@@ -2252,19 +2361,14 @@ const App = () => {
                         </td>
                         {playerKeys.map((p) => {
                           const tip = state.players[p]?.tips[f.id] || {};
-                          let tipStr = "";
-
                           const tipH_hasValue =
                             tip.h !== undefined && tip.h !== "";
                           const tipA_hasValue =
                             tip.a !== undefined && tip.a !== "";
-
-                          if (tipH_hasValue || tipA_hasValue) {
-                            const finalTipH = tipH_hasValue ? tip.h : "0";
-                            const finalTipA = tipA_hasValue ? tip.a : "0";
-                            tipStr = `${finalTipH}–${finalTipA}`;
-                          }
-
+                          const tipStr =
+                            tipH_hasValue || tipA_hasValue
+                              ? `${tipH_hasValue ? tip.h : "0"}–${tipA_hasValue ? tip.a : "0"}`
+                              : "";
                           const pts = calculateMatchScore(
                             act.h,
                             act.a,
@@ -2272,7 +2376,6 @@ const App = () => {
                             tip.a,
                             locked,
                           );
-
                           return (
                             <td
                               key={p}
@@ -2361,22 +2464,42 @@ const App = () => {
                     </div>
                   </div>
                 )}
-                <PlayerControlPanel />
+                {playerControlPanelJSX}
+              </div>
+            )}
+
+            {phase === "slutspel" && (
+              <div className="mb-4 flex items-center gap-3">
+                <div className="h-0.5 flex-1 bg-amber-500/30 rounded"></div>
+                <span className="text-xs font-bold uppercase tracking-widest text-amber-500 px-2">
+                  Slutspelsmatcher
+                </span>
+                <div className="h-0.5 flex-1 bg-amber-500/30 rounded"></div>
               </div>
             )}
 
             {Object.entries(groupedFixtures).map(([groupKey, matches]) => {
               const isDayLocked = state.lockedDays?.[groupKey];
+              const isKnockoutPhase = phase === "slutspel";
               return (
                 <div key={groupKey} className="mb-8">
-                  <div className="flex justify-between items-center mb-4 border-b border-slate-700 pb-2">
-                    <h2 className="text-emerald-500 font-bold text-lg">
+                  <div
+                    className="flex justify-between items-center mb-4 border-b pb-2"
+                    style={{
+                      borderColor: isKnockoutPhase
+                        ? "rgba(245,158,11,0.3)"
+                        : "rgb(51,65,85)",
+                    }}
+                  >
+                    <h2
+                      className={`font-bold text-lg ${isKnockoutPhase ? "text-amber-500" : "text-emerald-500"}`}
+                    >
                       {groupKey}
                     </h2>
                     {tab === "admin" && (
                       <button
                         onClick={() => toggleDayLock(groupKey)}
-                        className={`px-4 py-1 rounded text-sm font-bold shadow-sm transition-colors ${isDayLocked ? "bg-rose-600 hover:bg-rose-500 text-white" : "bg-emerald-600 hover:bg-emerald-500 text-white"}`}
+                        className={`px-4 py-1 rounded text-sm font-bold shadow-sm transition-colors ${isDayLocked ? "bg-rose-600 hover:bg-rose-500 text-white" : isKnockoutPhase ? "bg-amber-600 hover:bg-amber-500 text-white" : "bg-emerald-600 hover:bg-emerald-500 text-white"}`}
                       >
                         {isDayLocked
                           ? "Lås Upp Dagen"
@@ -2404,27 +2527,36 @@ const App = () => {
                             state.lockedDays?.[f.groupKey],
                           )
                         : null;
+                      const borderColor = isKnockoutPhase
+                        ? tab === "admin" && isDayLocked
+                          ? "border-rose-500/50"
+                          : "border-amber-500/20"
+                        : tab === "admin" && isDayLocked
+                          ? "border-rose-500/50"
+                          : "border-slate-700";
                       return (
                         <div
                           key={f.id}
-                          className={`bg-slate-800 border ${tab === "admin" && isDayLocked ? "border-rose-500/50" : "border-slate-700"} rounded-lg p-3 sm:p-4 flex flex-col md:flex-row items-center gap-3 sm:gap-4 shadow-sm hover:border-slate-600 transition-colors w-full`}
+                          className={`bg-slate-800 border ${borderColor} rounded-lg p-3 sm:p-4 flex flex-col md:flex-row items-center gap-3 sm:gap-4 shadow-sm hover:border-slate-600 transition-colors w-full`}
                         >
-                          <div className="text-center md:text-left md:w-20 shrink-0 text-sm sm:text-base">
-                            <div className="text-slate-300 font-bold">
+                          <div className="w-24 sm:w-28 shrink-0 text-center sm:text-left flex flex-col justify-center">
+                            <div className="text-slate-300 font-bold leading-none">
                               {f.time !== "-" ? f.time : "TBD"}
                             </div>
-                            <div className="text-xs text-emerald-400 font-medium">
+                            <div
+                              className={`text-[10px] sm:text-xs mt-0.5 font-medium ${isKnockoutPhase ? "text-amber-400" : "text-emerald-400"}`}
+                            >
                               {f.tv !== "-" ? f.tv : ""}
                             </div>
                           </div>
                           <div className="flex-1 w-full grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 sm:gap-4">
                             <div
-                              className="text-right font-medium text-slate-200 text-xs sm:text-base whitespace-nowrap overflow-hidden text-ellipsis"
+                              className="text-right font-medium text-slate-200 text-xs sm:text-base truncate"
                               title={f.home}
                             >
                               {f.home}
                             </div>
-                            <div className="flex items-center justify-center gap-1 sm:gap-3 bg-slate-950 px-2 sm:px-3 py-1 sm:py-1.5 rounded border border-slate-700 shrink-0 mx-auto w-max">
+                            <div className="flex items-center justify-center gap-1 sm:gap-2 bg-slate-950 px-2 sm:px-3 py-1 sm:py-1.5 rounded border border-slate-700 shrink-0 mx-auto w-max">
                               <ScoreInputGroup
                                 id={f.id}
                                 field="h"
@@ -2433,7 +2565,7 @@ const App = () => {
                                 isActual={!isTips}
                                 groupKey={f.groupKey}
                               />
-                              <span className="text-slate-500 font-extrabold text-xs sm:text-lg shrink-0">
+                              <span className="text-slate-500 font-extrabold text-xs sm:text-base">
                                 &ndash;
                               </span>
                               <ScoreInputGroup
@@ -2446,7 +2578,7 @@ const App = () => {
                               />
                             </div>
                             <div
-                              className="text-left font-medium text-slate-200 text-xs sm:text-base whitespace-nowrap overflow-hidden text-ellipsis"
+                              className="text-left font-medium text-slate-200 text-xs sm:text-base truncate"
                               title={f.away}
                             >
                               {f.away}
@@ -2454,7 +2586,7 @@ const App = () => {
                           </div>
                           {isTips && (
                             <div
-                              className={`md:w-16 shrink-0 text-center rounded-lg py-1.5 font-bold text-xs sm:text-sm border ${pts > 0 ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-slate-900 text-slate-500 border-slate-700/60"}`}
+                              className={`md:w-16 shrink-0 text-center rounded-lg py-1.5 font-bold text-xs sm:text-sm border ${pts > 0 ? (isKnockoutPhase ? "bg-amber-500/10 text-amber-400 border-amber-500/20" : "bg-emerald-500/10 text-emerald-400 border-emerald-500/20") : "bg-slate-900 text-slate-500 border-slate-700/60"}`}
                             >
                               {pts} pt
                             </div>
@@ -2469,10 +2601,8 @@ const App = () => {
 
             {tab === "tips" && (
               <div className="mt-8 mb-4 bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-md flex flex-col gap-6 items-center text-center">
-                <PlayerControlPanel />
-
+                {playerControlPanelJSX}
                 <div className="w-full border-t border-slate-700/60 my-2"></div>
-
                 <div>
                   <h3 className="text-lg font-bold text-emerald-400 mb-1">
                     Exportera / Skriv ut (PDF)
@@ -2555,3 +2685,4 @@ const App = () => {
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
+            
