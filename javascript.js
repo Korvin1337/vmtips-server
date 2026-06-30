@@ -962,6 +962,7 @@ const App = () => {
 
   const fileInputRef = useRef(null);
   const ADMIN_PASSWORD = "VMTIPS2026";
+  const allowedCousins = ["isak", "kevin", "calle"];
 
   const activeFixtures =
     phase === "gruppspel" ? fixturesGroup : fixturesKnockout;
@@ -978,6 +979,11 @@ const App = () => {
     [groupedFixtures],
   );
   const playerKeys = Object.keys(state.players);
+
+  const displayPlayerKeys =
+    phase === "slutspel"
+      ? playerKeys.filter((p) => allowedCousins.includes(p.toLowerCase()))
+      : playerKeys;
 
   useEffect(() => {
     setSyncStatus(SYNC.LOADING);
@@ -1069,8 +1075,12 @@ const App = () => {
     () => [...leaderboard].sort((a, b) => b.groupPts - a.groupPts),
     [leaderboard],
   );
+
   const leaderboardKnockout = useMemo(
-    () => [...leaderboard].sort((a, b) => b.knockoutPts - a.knockoutPts),
+    () =>
+      [...leaderboard]
+        .filter((l) => allowedCousins.includes(l.name.toLowerCase()))
+        .sort((a, b) => b.knockoutPts - a.knockoutPts),
     [leaderboard],
   );
 
@@ -1252,12 +1262,9 @@ const App = () => {
   };
 
   const adjustScore = (id, field, currentVal, delta, isActual, groupKey) => {
-    if (!isActual) {
-      const key = browsedPlayer.trim();
-      if (!key || state.players[key]?.locked) return;
-    } else {
-      if (state.lockedDays?.[groupKey]) return;
-    }
+    const key = browsedPlayer.trim();
+    if (!isActual && (!key || state.players[key]?.locked)) return;
+    if (isActual && state.lockedDays?.[groupKey]) return;
     const cur =
       currentVal !== undefined && currentVal !== ""
         ? parseInt(currentVal, 10)
@@ -1721,7 +1728,7 @@ const App = () => {
                   <th className="p-2 border-b border-slate-700 text-emerald-400 font-medium text-center">
                     Resultat
                   </th>
-                  {playerKeys.map((p) => (
+                  {displayPlayerKeys.map((p) => (
                     <th
                       key={p}
                       className="p-2 border-b border-slate-700 text-slate-200 font-bold text-center border-l border-slate-700/50"
@@ -1759,7 +1766,7 @@ const App = () => {
                       <td className="p-2 text-center font-bold text-white">
                         {actStr}
                       </td>
-                      {playerKeys.map((p) => {
+                      {displayPlayerKeys.map((p) => {
                         const tip = state.players[p]?.tips[f.id] || {};
                         const tipH_hasValue =
                           tip.h !== undefined && tip.h !== "";
@@ -2321,7 +2328,7 @@ const App = () => {
                     <th className="p-3 border-b border-slate-700 text-emerald-400 font-medium text-center">
                       Resultat
                     </th>
-                    {playerKeys.map((p) => (
+                    {displayPlayerKeys.map((p) => (
                       <th
                         key={p}
                         className="p-3 border-b border-slate-700 text-slate-200 font-bold text-center border-l border-slate-700/50"
@@ -2359,7 +2366,7 @@ const App = () => {
                         <td className="p-3 text-center font-bold text-white bg-slate-900/30">
                           {actStr}
                         </td>
-                        {playerKeys.map((p) => {
+                        {displayPlayerKeys.map((p) => {
                           const tip = state.players[p]?.tips[f.id] || {};
                           const tipH_hasValue =
                             tip.h !== undefined && tip.h !== "";
